@@ -18,7 +18,7 @@ const SliderCards = () => {
           <div
             onClick={() => handleProductClick(bed.id)}
             key={bed.id}
-            className="min-w-[240px] bg-gray-100 border p-4 border-gray-300 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-transform transform hover:scale-105"
+            className="min-w-[240px] bg-gray-100 border p-4 border-gray-300 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
           >
             {/* Display the single image for each product */}
             <img

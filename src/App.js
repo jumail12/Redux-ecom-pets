@@ -23,7 +23,8 @@ import { fetchCart } from './sliceLogic/cartSlice';
 import TopPro from './components/TopPro/TopPro';
 import Payment from './pages/Payment';
 import ThankYou from './pages/ThankYou';
-import PetAdoption from './components/PetAdoption';
+import Profile from './components/Profile';
+// import PetAdoption from './components/PetAdoption';
 
 const LOCAL_STORAGE_ID_KEY = "id";
 
@@ -43,7 +44,9 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/store' element={<Best />} />
-        <Route path='/adopt' element={<PetAdoption />} />
+        {/* <Route path='/adopt' element={<PetAdoption />} /> */}
+
+        <Route path="/profile" element={<Profile />} />
 
         <Route path='/dog' element={<DogLayout />}>
           <Route index element={<DogFood />} /> 

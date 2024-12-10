@@ -61,6 +61,11 @@ const Navbar = () => {
     }
   };
 
+  const handlePro=()=>{
+    nav("/profile");
+    setDropdownOpen(false)
+  }
+
   return (
     <nav className="bg-white shadow-md py-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -78,9 +83,7 @@ const Navbar = () => {
           <Link to="/store" className="text-gray-600 hover:text-teal-500" aria-label="Featured">
             Featured
           </Link>
-          <Link to="/adopt" className="text-gray-600 hover:text-teal-500" aria-label="Adopt">
-            Adopt
-          </Link>
+        
 
           {/* Search Bar */}
           <div className="relative">
@@ -135,12 +138,24 @@ const Navbar = () => {
               <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
                 <ul>
                   {user ? (
+                    <>
                     <li
                       onClick={handleLogOut}
                       className="block px-4 py-2 text-gray-600 hover:bg-gray-100 cursor-pointer"
                     >
                       Logout
                     </li>
+                    <li>
+      <Link
+        to="/profile"
+        className="block px-4 py-2 text-gray-600 hover:bg-gray-100"
+        onClick={ handlePro}
+      >
+        Profile
+      </Link>
+    </li>
+                    
+                   </>
                   ) : (
                     <li
                       onClick={handleLogIn}
@@ -148,6 +163,7 @@ const Navbar = () => {
                     >
                       Login
                     </li>
+                    
                   )}
                 </ul>
               </div>

@@ -10,126 +10,7 @@
       "cart": [],
       "order": [
         {
-          "address": "ajjjdbnc,vnnvj,nnnjc,",
-          "paymentMethod": "credit-card",
-          "cart": [
-            {
-              "id": "2",
-              "heading": "Pro Plan Vet Diet Hypoallergenic Dry Dog Food 11kg",
-              "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
-              "catogory": "dog-food",
-              "price": 55,
-              "rating": 4,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 55
-        },
-        {
-          "address": "kmjn mnjm mnn",
-          "paymentMethod": "bank-transfer",
-          "cart": [
-            {
-              "id": "2",
-              "heading": "Pro Plan Vet Diet Hypoallergenic Dry Dog Food 11kg",
-              "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
-              "catogory": "dog-food",
-              "price": 55,
-              "rating": 4,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 55
-        },
-        {
-          "address": "a",
-          "paymentMethod": "credit-card",
-          "cart": [
-            {
-              "id": "2",
-              "heading": "Pro Plan Vet Diet Hypoallergenic Dry Dog Food 11kg",
-              "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
-              "catogory": "dog-food",
-              "price": 55,
-              "rating": 4,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 55
-        },
-        {
-          "address": "mn",
-          "paymentMethod": "credit-card",
-          "cart": [
-            {
-              "id": "2",
-              "heading": "Pro Plan Vet Diet Hypoallergenic Dry Dog Food 11kg",
-              "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
-              "catogory": "dog-food",
-              "price": 55,
-              "rating": 4,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 55
-        },
-        {
-          "address": "zx",
-          "paymentMethod": "credit-card",
-          "cart": [
-            {
-              "id": "2",
-              "heading": "Pro Plan Vet Diet Hypoallergenic Dry Dog Food 11kg",
-              "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
-              "catogory": "dog-food",
-              "price": 55,
-              "rating": 4,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 55
-        },
-        {
-          "address": "zxs",
-          "paymentMethod": "credit-card",
-          "cart": [
-            {
-              "id": "2",
-              "heading": "Pro Plan Vet Diet Hypoallergenic Dry Dog Food 11kg",
-              "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
-              "catogory": "dog-food",
-              "price": 55,
-              "rating": 4,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 55
-        },
-        {
-          "address": "o",
-          "paymentMethod": "credit-card",
-          "cart": [
-            {
-              "id": "2",
-              "heading": "Pro Plan Vet Diet Hypoallergenic Dry Dog Food 11kg",
-              "discription": "Give your dog the ultimate care with Pro Plan Vet Diet Hypoallergenic Dry Dog Food. Specially formulated for dogs with food sensitivities and allergies,",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7118367.jpg",
-              "catogory": "dog-food",
-              "price": 55,
-              "rating": 4,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 55
-        },
-        {
-          "address": "p",
+          "address": "abc,nhbmj",
           "paymentMethod": "credit-card",
           "cart": [
             {
@@ -140,64 +21,30 @@
               "catogory": "dog-beds",
               "price": 26,
               "rating": 4.5,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 26
-        },
-        {
-          "address": "yhb",
-          "paymentMethod": "credit-card",
-          "cart": [
+              "qty": 2
+            },
             {
-              "id": "14",
-              "heading": "3 Peaks Nevis Dog Bed Green",
-              "discription": "Water-resistant, tough and comfortable for resting after adventures",
-              "url": "https://cdn.petsathome.com/public/images/products/900_P71626.jpg",
-              "catogory": "dog-beds",
-              "price": 35,
-              "rating": 4.5,
-              "qty": 1
-            }
-          ],
-          "totalPrice": 35
-        },
-        {
-          "address": "koorikkattil house ,poothakkade ,verranmgalm ",
-          "paymentMethod": "paypal",
-          "cart": [
+              "id": "24",
+              "heading": "Pro Plan Vet Diet HA Hypoallergenic Dry Cat Food",
+              "discription": "A complete dietetic feed for cats of all ages, designed to reduce ingredient and nutrient intolerances.",
+              "url": "https://cdn.petsathome.com/public/images/products/900_P71040.jpg",
+              "catogory": "cat-food",
+              "price": 16,
+              "rating": 4,
+              "qty": 2
+            },
             {
-              "id": "22",
-              "heading": "Pets at Home Adult Cat Wet Food Chunks in Jelly Variety 24x400g",
-              "discription": "Four tasty flavours, supporting heart, eyes, and immune health with no artificial additives for a complete and balanced meal",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7142129.jpg",
+              "id": "25",
+              "heading": "Purina ONE Adult Mini Fillets Wet Cat Food Gravy 40x85g",
+              "discription": "Supports gut balance with soluble fibres, nourishes bones, muscles, joint health, and promotes radiant skin and coat. Delicious, high-quality protein included.",
+              "url": "https://cdn.petsathome.com/public/images/products/900_7135257.jpg",
               "catogory": "cat-food",
               "price": 16,
               "rating": 4.5,
-              "qty": 1
-            },
-            {
-              "id": "6",
-              "heading": "Harringtons Complete Natural Adult Dry Dog Food Turkey & Veg 15kg",
-              "discription": "This improved recipe food contains Vitamins, minerals and Omega 3 & 6 in the form of salmon oil to support overall health, maintain a healthy coat and reduce flatulence odour.",
-              "url": "https://cdn.petsathome.com/public/images/products/900_37036.jpg",
-              "catogory": "dog-food",
-              "price": 34,
-              "rating": 4.5,
-              "qty": 1
-            },
-            {
-              "id": "29",
-              "heading": "Royal Canin Veterinary Renal Adult Wet Cat Food Fish 48x85g",
-              "discription": "Veterinary-approved dietetic food only to be used based on recommendation of a vet Chronic Renal Insufficiency",
-              "url": "https://cdn.petsathome.com/public/images/products/900_7114543.jpg",
-              "catogory": "cat-food",
-              "price": 59,
-              "rating": 3,
-              "qty": 1
+              "qty": 2
             }
           ],
-          "totalPrice": 109
+          "totalPrice": 116
         }
       ]
     },
@@ -208,7 +55,18 @@
       "email": "lll@gmail.com",
       "mob": "1234567890",
       "password": "121212",
-      "cart": [],
+      "cart": [
+        {
+          "id": "6",
+          "heading": "Harringtons Complete Natural Adult Dry Dog Food Turkey & Veg 15kg",
+          "discription": "This improved recipe food contains Vitamins, minerals and Omega 3 & 6 in the form of salmon oil to support overall health, maintain a healthy coat and reduce flatulence odour.",
+          "url": "https://cdn.petsathome.com/public/images/products/900_37036.jpg",
+          "catogory": "dog-food",
+          "price": 34,
+          "rating": 4.5,
+          "qty": 1
+        }
+      ],
       "order": [
         {
           "address": "mkkkkk",
@@ -236,6 +94,23 @@
             }
           ],
           "totalPrice": 36
+        },
+        {
+          "address": "imko",
+          "paymentMethod": "credit-card",
+          "cart": [
+            {
+              "id": "1",
+              "heading": "Pets at Home Degradable Dog Poop Bags 200 Pack+20 Extra Free !",
+              "discription": "Easily carry and hygienically dispose of dog waste with tie-handle bags. Portable, quick-dispensing pack offers great value with 20 extra bags.",
+              "url": "https://cdn.petsathome.com/public/images/products/900_7137876.jpg",
+              "catogory": "dog-food",
+              "price": "6",
+              "rating": "3.8",
+              "qty": 3
+            }
+          ],
+          "totalPrice": 18
         }
       ]
     },

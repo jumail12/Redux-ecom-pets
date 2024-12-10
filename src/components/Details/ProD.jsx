@@ -9,15 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ProD = () => {
     const navigate = useNavigate();
-    const dispatch=useDispatch()
-
-
+    const dispatch=useDispatch();
 
     // Select products from the Redux store
     const products = useSelector((state) => state.pro.products);
-
-   
-
 
     // Get product ID from URL params
     const { id } = useParams();
@@ -51,51 +46,55 @@ const ProD = () => {
     }
 
     return (
-        <div className="container mt-5 mx-auto p-6 bg-gray-50 shadow-lg rounded-lg max-w-2xl">
-        <ToastContainer/>
-        <button 
-            onClick={() => navigate(-1)} // Navigate back to the previous page
-            className="mb-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-all shadow"
-        >
-            &lt; 
-        </button>
-        <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg p-6">
-            {/* Product Image */}
-            <div className="md:w-1/2">
-                <img
-                    src={product.url}
-                    alt={product.heading}
-                    className="w-full h-auto object-cover rounded-lg shadow-md"
-                />
+        <div className="min-h-screen bg-green-50 flex items-center justify-center">
+        <ToastContainer />
+        <div className="w-11/12 max-w-5xl bg-white shadow-lg rounded-lg flex flex-col md:flex-row overflow-hidden">
+          {/* Product Image */}
+          <div className="w-full md:w-1/2 h-96 md:h-auto">
+            <img
+              src={product.url}
+              alt={product.heading}
+              className="w-full h-full object-cover"
+            />
+          </div>
+      
+          {/* Product Details */}
+          <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
+            <button
+              onClick={() => navigate(-1)} // Navigate back
+              className="mb-4 bg-green-200 text-green-700 px-3 py-1 rounded hover:bg-green-300 transition-all self-start"
+            >
+              &lt; Back
+            </button>
+            <div>
+              <h2 className="text-2xl font-semibold text-green-700">{product.heading}</h2>
+              <h1 className="text-3xl font-bold text-green-800 mt-2">${product.price}</h1>
+      
+              {/* Rating Section */}
+              <div className="mt-4 text-lg">
+                <span className="text-yellow-500">
+                  {'★'.repeat(Math.floor(product.rating))}{/* Filled stars */}
+                  {'☆'.repeat(5 - Math.floor(product.rating))}{/* Empty stars */}
+                </span>
+                <span className="text-gray-500 font-medium ml-2">{product.rating}/5</span>
+              </div>
+      
+              <p className="text-gray-600 text-sm mt-6 leading-relaxed">
+                {product.discription}
+              </p>
             </div>
-    
-            {/* Product Info */}
-            <div className="md:w-1/2 md:pl-8 mt-6 md:mt-0 flex flex-col justify-between">
-                <div>
-                    <h2 className="text-xl font-bold text-gray-800">{product.heading}</h2>
-                    <h1 className="text-2xl font-bold text-blue-900 mt-2">${product.price}</h1>
-    
-                    {/* Rating Section */}
-                    <div className="mt-2">
-                        <span className="text-yellow-500">
-                            {/* Assuming product.rating is a number between 0 and 5 */}
-                            {'★'.repeat(Math.floor(product.rating))}{/* Filled stars */}
-                            {'☆'.repeat(5 - Math.floor(product.rating))}{/* Empty stars */}
-                        </span>
-                        <span className="text-gray-600 font-semibold ml-2"> {product.rating}/5</span>
-                    </div>
-    
-                    <p className="text-gray-600 text-sm mt-4">{product.discription}</p>
-                </div>
-    
-                {/* Add to Cart Button */}
-                <button onClick={async () => await addTocart(product)} className="mt-6 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-all shadow hover:shadow-lg">
-                    Add to Cart
-                </button>
-            </div>
+      
+            {/* Add to Cart Button */}
+            <button
+              onClick={async () => await addTocart(product)}
+              className="mt-8 bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-all shadow-md"
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
-    </div>
-    
+      </div>
+      
     );
 };
 
