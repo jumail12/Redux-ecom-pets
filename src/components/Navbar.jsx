@@ -6,34 +6,31 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const nav = useNavigate();
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem("name");
   const id = localStorage.getItem("id");
   
   const [cartL, setCartL] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const fetchCartL = async () => {
+    if (!id) return setCartL([]); // Exit early if no ID is found
     try {
-      if (id) {
-        const res = await axios.get(`http://localhost:5002/users/${id}`);
-        setCartL(res.data.cart);
-      } else {
-        setCartL([]);
-      }
-    } catch {
-      console.log("error");
+      const res = await axios.get(`http://localhost:5002/users/${id}`);
+      setCartL(res.data.cart);
+    } catch (error) {
+      console.log("Error fetching cart:", error);
     }
   };
 
   useEffect(() => {
     fetchCartL();
-  }, [id, cartL]);
+  }, [id]);
 
   const handleLogOut = () => {
     localStorage.clear();
     fetchCartL();
     setCartL([]);
-    setDropdownOpen(false);
+    setDropdownOpen(false); // Ensure the dropdown closes
   };
 
   const handleLogIn = () => {
@@ -41,7 +38,7 @@ const Navbar = () => {
     setDropdownOpen(false);
   };
   const navigateHome = () => nav("/");
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
 
 
   // search
@@ -61,9 +58,20 @@ const Navbar = () => {
     }
   };
 
-  const handlePro=()=>{
+  useEffect(() => {
+    const closeDropdown = (e) => {
+      if (!e.target.closest(".relative")) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", closeDropdown);
+    return () => document.removeEventListener("click", closeDropdown);
+  }, []);
+  
+
+  const handlePro = () => {
     nav("/profile");
-    setDropdownOpen(false)
+    setDropdownOpen(false);
   }
 
   return (

@@ -1,60 +1,68 @@
-import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import axios  from "axios"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosInstance } from "../api/axiosInstance";
 
-
-export const fetchUsers=createAsyncThunk("user/fetchUsers", async()=>{
-    const resp=await axios.get(`http://localhost:5002/users`);
-    return resp.data
+export const loginUser = createAsyncThunk("user/loginUser", async (data) => {
+  try {
+    const resp = await axiosInstance.post("/Auth/Login", data);
+    return resp.data;
+  } catch (er) {
+    throw new Error(
+      er.response?.data || "Please check your internet connection"
+    );
+  }
 });
 
-// add users to server
- export const addUsers=createAsyncThunk("user/addUsers",async(user)=>{
-   const resp=await axios.post(`http://localhost:5002/users` , user)
-   return resp.data
-})
+export const addUsers = createAsyncThunk("user/addUsers", async (user) => {
+  try {
+    const resp = await axiosInstance.post(`/Auth/Register`, user);
+    return resp.data; // Return the response message
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Please check your internet connection"
+    );
+  }
+});
 
+const initialState = {
+  status: "idle", // "loading", "fulfilled", "rejected"
+  registerData: null,
+  loginStatus: false,
+  error: "",
+};
 
-const intial={
-    status:"idle",  //loading , fulfilled , rejected
-    users:[],
-    error:""
-}
+const userSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
 
-const userSlice=createSlice({
-    name:"user",
-    initialState:intial,
-    reducers:{},
-    extraReducers:(builder)=>{
-      builder 
-      .addCase(fetchUsers.pending, (state,action)=>{
-           state.status="loading"
+      //login
+      .addCase(loginUser.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(fetchUsers.fulfilled, (state,action)=>{
-         state.status="fulfilled";
-         state.users=action.payload
+      .addCase(loginUser.fulfilled, (state) => {
+        state.status = "fulfilled";
+        state.loginStatus = true;
       })
-      .addCase(fetchUsers.rejected, (state,action)=>{
-        state.status="rejected";
-         state.error=action.error.message;
-         state.users=[];
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
       })
 
-    //   add users
-
-    .addCase(addUsers.pending, (state,action)=>{
-            state.status="loading"
-    })
-
-    .addCase(addUsers.fulfilled, (state,action)=>{
-        state.status="fulfilled";
-        state.users=action.payload
-    })
-    .addCase(addUsers.rejected, (state,action)=>{
-        state.status="rejected";
-         state.error=action.error.message;
-         state.users=[];
-    })
-    }
+      //register
+      .addCase(addUsers.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addUsers.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.registerData = action.payload;
+      })
+      .addCase(addUsers.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
+      });
+  },
 });
 
 export default userSlice.reducer;

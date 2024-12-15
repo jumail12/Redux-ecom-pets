@@ -68,13 +68,18 @@ const Profile = () => {
       {/* Orders Section */}
       <div className="bg-white shadow-md rounded-lg p-6">
   <h2 className="text-xl font-semibold mb-4">Your Orders</h2>
+
   {loadingOrders ? (
     <p>Loading orders...</p>
-  ) : userOrders.length > 0 ? (
+  ) 
+  
+  : userOrders.length > 0 ? (
+
     <ul className="space-y-4">
       {userOrders.map((order, index) => (
+
         <li key={index} className="border p-4 rounded">
-          <h3 className="font-bold mb-2">Order #{index + 1}</h3>
+          <h3 className=" font-extrabold text-rose-300  bg-slate-500 mb-2">Order #{index + 1}</h3>
           <p>
             <strong>Address:</strong> {order.address}
           </p>
@@ -84,14 +89,16 @@ const Profile = () => {
           <p>
             <strong className="font-bold">Total Price:</strong> ${order.totalPrice}
           </p>
+
           <h4 className="mt-2 font-bold ">Items:</h4>
+
           <ul className="space-y-2">
             {order.cart.map((item) => (
               <li key={item.id} className="flex items-center space-x-4">
                 <img
                   src={item.url}
                   alt={item.heading}
-                  className="w-16 h-16 object-cover rounded"
+                  className="w-16 h-16 object-fill rounded"
                 />
                 <div>
                   <h5 className="font-semibold">{item.heading}</h5>

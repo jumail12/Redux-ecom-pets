@@ -1,10 +1,8 @@
-import './App.css';
+
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Register from './components/login/Register';
 import Login from './components/login/Login';
-import CatAll from './components/Cat/CatAll';
-import DogAll from './components/Dog/DogAll';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import DogLayout from './pages/DogLayout';
@@ -24,9 +22,11 @@ import TopPro from './components/TopPro/TopPro';
 import Payment from './pages/Payment';
 import ThankYou from './pages/ThankYou';
 import Profile from './components/Profile';
-// import PetAdoption from './components/PetAdoption';
+import { ToastContainer } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 
-const LOCAL_STORAGE_ID_KEY = "id";
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -36,9 +36,15 @@ function App() {
       dispatch(fetchProducts());
   }, [dispatch]);
 
+  const location=useLocation();
+  const sholudHidden=location.pathname==="/login"||location.pathname==="/register" || location.pathname.startsWith("/admin") 
+
   return (
     <div>
-      <Navbar />
+      
+      {!sholudHidden&&<Navbar/>}
+      <ToastContainer/>
+     
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/register' element={<Register />} />
@@ -66,7 +72,7 @@ function App() {
         <Route path='/payment' element={<Payment/>}/>
         <Route path='/thankyou' element={<ThankYou/>}/>
        </Routes>
-      <Footer />
+       {!sholudHidden&&<Footer/>}
     </div>
   );
 }
