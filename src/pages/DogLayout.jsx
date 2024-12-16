@@ -1,9 +1,13 @@
 // DogLayout.js
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import DogOffer from '../components/Carousel/DogOffer';
 
 const DogLayout = () => {
+    const nav=useNavigate();
+    const handleCategory=(str)=>{
+        nav(`/dog/${str}`);
+    }
     return (
         <div className="flex flex-col">
             {/* Navigation Bar with Gray Background */}
@@ -13,20 +17,20 @@ const DogLayout = () => {
                     <h2 className="text-2xl font-bold text-gray-800">Categories</h2>
                     <ul className="flex space-x-6">
                         <li>
-                            <Link
-                                to="/dog/dfood"
+                            <button
+                                  onClick={()=>handleCategory("dog-food")}
                                 className="text-gray-700 hover:text-indigo-600 transition duration-300"
                             >
                                 Dog Food
-                            </Link>
+                            </button>
                         </li>
                         <li>
-                            <Link
-                                to="/dog/dbeds"
+                            <button
+                                 onClick={()=>handleCategory("dog-beds")}
                                 className="text-gray-700 hover:text-indigo-600 transition duration-300"
                             >
                                 Dog Beds
-                            </Link>
+                            </button>
                         </li>
                     </ul>
                 </div>

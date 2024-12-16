@@ -1,9 +1,14 @@
 
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import CatOffer from '../components/Carousel/CatOffer';
 
 const CatLayout = () => {
+    const nav=useNavigate();
+
+    const handleCategory=(str)=>{
+        nav(`/cat/${str}`);
+    }
   return (
     <div className="flex flex-col">
         <CatOffer/>
@@ -14,20 +19,20 @@ const CatLayout = () => {
             <ul className="flex space-x-6">
                 <li>
                     
-                    <Link
-                        to="/cat/cfood"
+                    <button
+                        onClick={()=>handleCategory("cat-food")}
                         className="text-gray-700 hover:text-indigo-600 transition duration-300"
                     >
                         Cat Food
-                    </Link>
+                    </button>
                 </li>
                 <li>
-                    <Link
-                        to="/cat/ctreat"
+                    <button
+                        onClick={()=>handleCategory("cat-treat")}
                         className="text-gray-700 hover:text-indigo-600 transition duration-300"
                     >
                         Cat Treat
-                    </Link>
+                    </button>
                 </li>
             </ul>
         </div>

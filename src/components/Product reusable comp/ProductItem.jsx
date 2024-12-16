@@ -1,34 +1,54 @@
-// src/components/ProductItem.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { useDispatch,useSelector } from "react-redux";
+import { addOrRemoveWishlist, fetchwishlist } from "../../sliceLogic/WishListSlice";
+
 
 const ProductItem = ({ product }) => {
-    const navigate = useNavigate();
+    const dispatch=useDispatch();
 
-    const handleClick = () => {
-        navigate(`/prod/${product.id}`);
+    const [isInWishlist, setIsInWishlist] = useState(false);
+
+    // Toggle wishlist status
+    const handleWishlist = (id) => {
+        setIsInWishlist((prevState) => !prevState);
+        dispatch(addOrRemoveWishlist(id))
+        // dispatch(fetchwishlist());
     };
 
     return (
         <div
-            onClick={handleClick}
-            className="bg-white border cursor-pointer p-4 border-gray-300 rounded-lg overflow-hidden shadow-md transition-transform transform hover:shadow-xl"
+            key={product.productId}
+            className="relative p-4 border border-gray-200 rounded-lg bg-white shadow-md text-center transition-transform transform hover:scale-105"
         >
-            <img
-                src={product.url}
-                alt={product.heading}
-                className="ml-3 w-40 h-25 object-fill"
-            />
-            <div className="p-4">
-                <h2 className="text-md font-semibold text-gray-800 mb-2">
-                    {product.heading}
-                </h2>
-                <p className="text-lg font-bold text-gray-700 mb-4">
-                    ${product.price}
-                </p>
+            <Link to={`/product/${product.productId}`} className="block">
+                <img
+                    src={product.imageUrl}
+                    alt={product.productName}
+                    className="w-full h-48 object-cover rounded-md mb-4 transition-transform transform hover:scale-105"
+                />
+            </Link>
+            <button
+                onClick={()=>handleWishlist(product.productId)}
+                className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-lg"
+            >
+                {isInWishlist ? (
+                    <AiFillHeart size={24} className="text-red-500" />
+                ) : (
+                    <AiOutlineHeart size={24} className="text-gray-500" />
+                )}
+            </button>
+            <div className="relative mt-2">
+                <h2 className="text-md font-semibold mb-2">{product.productName}</h2>
+                <div className="flex justify-center items-center">
+                    <p className="text-gray-600 line-through mr-2">₹{product.productPrice}</p>
+                    <p className="text-gray-600 font-bold">₹{product.offerPrize}</p>
+                </div>
             </div>
         </div>
     );
 };
 
 export default ProductItem;
+

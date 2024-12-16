@@ -3,6 +3,10 @@ import userSlice from "../sliceLogic/userAuth";
 import productSlice from "../sliceLogic/ProductSlice";
 import  cartSlice from "../sliceLogic/cartSlice";
 import orderSlice from "../sliceLogic/Payment";
+import wishlistSlice  from "../sliceLogic/WishListSlice"
+
+
+
 
 
 const store=configureStore({
@@ -10,7 +14,8 @@ const store=configureStore({
         userRed:userSlice,
         pro:productSlice,
         cartItems:cartSlice,
-        ord:orderSlice
+        ord:orderSlice,
+        wish:wishlistSlice
     }
 });
 

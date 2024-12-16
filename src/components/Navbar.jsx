@@ -150,6 +150,14 @@ const Navbar = () => {
           >
             Featured
           </Link>
+          <Link
+            to="/wishlist"
+            className="text-gray-600 hover:text-teal-500"
+            aria-label="Featured"
+          >
+            Wishlist
+          </Link>
+
 
           {/* Search Bar */}
           <div className="relative">

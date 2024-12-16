@@ -12,7 +12,7 @@ import CatLayout from './pages/CatLayout';
 import CatFood from './components/Cat/CatFood';
 import CatTreat from './components/Cat/CatTreat';
 import Best from './components/Best';
-import ProD from './components/Details/ProD';
+
 import Cart from './pages/Cart';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -24,6 +24,8 @@ import ThankYou from './pages/ThankYou';
 import Profile from './components/Profile';
 import { ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import PDetails from './components/Details/PDetails';
+import WishList from './components/WishList ';
 
 
 
@@ -33,7 +35,7 @@ function App() {
 
   useEffect(() => {
        dispatch(fetchCart());
-      dispatch(fetchProducts());
+      // dispatch(fetchProducts());
   }, [dispatch]);
 
   const location=useLocation();
@@ -56,22 +58,26 @@ function App() {
 
         <Route path='/dog' element={<DogLayout />}>
           <Route index element={<DogFood />} /> 
-          <Route path='dfood' element={<DogFood />} /> 
-          <Route path='dbeds' element={<DogBed />} /> 
+          <Route path='dog-food' element={<DogFood />} /> 
+          <Route path='dog-beds' element={<DogBed />} /> 
         </Route>
 
         <Route path='/cat' element={<CatLayout />}>
           <Route index element={<CatFood />} /> 
-          <Route path='cfood' element={<CatFood />} /> 
-          <Route path='ctreat' element={<CatTreat />} /> 
+          <Route path='cat-food' element={<CatFood />} /> 
+          <Route path='cat-treat' element={<CatTreat />} /> 
         </Route>
         <Route path='/store' element={<TopPro/>}/>
 
-        <Route path='/prod/:id' element={<ProD />} />
+        <Route path='/wishlist' element={<WishList/>}/>
+
+        <Route path='/product/:idd' element={<PDetails/>}/>
         <Route path='/cart' element={<Cart />} />
         <Route path='/payment' element={<Payment/>}/>
         <Route path='/thankyou' element={<ThankYou/>}/>
        </Routes>
+
+      
        {!sholudHidden&&<Footer/>}
     </div>
   );
