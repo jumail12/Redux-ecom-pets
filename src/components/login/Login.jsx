@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchemaLogin } from "./loginValSchema";
 import { loginUser } from "../../sliceLogic/userAuth";
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,12 +22,13 @@ const Login = () => {
         })
       ).unwrap();
 
-      localStorage.setItem("id", res.id);
-      localStorage.setItem("role", res.role);
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("name", res.userName);
-      localStorage.setItem("email", res.userEmail);
-      toast.success("User logged in successfully",{
+      Cookies.set("id", res.id, { path: "/", secure: true, sameSite: "Strict" });
+      Cookies.set("role", res.role, { path: "/", secure: true, sameSite: "Strict" });
+      Cookies.set("token", res.token, { path: "/", secure: true, sameSite: "Strict" });
+      Cookies.set("name", res.userName, { path: "/", secure: true, sameSite: "Strict" });
+      Cookies.set("email", res.userEmail, { path: "/", secure: true, sameSite: "Strict" });
+
+      toast.success("logged in successfully",{
         onClose:()=>{
           resetForm();
           if ((res.role == "Admin")) {

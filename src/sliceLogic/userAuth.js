@@ -33,7 +33,11 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logOut:(state)=>{
+     state.loginStatus=false;
+    }
+  },
   extraReducers: (builder) => {
     builder
 
@@ -65,4 +69,5 @@ const userSlice = createSlice({
   },
 });
 
+export const {logOut}=userSlice.actions;
 export default userSlice.reducer;

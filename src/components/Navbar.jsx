@@ -2,13 +2,22 @@ import React, { useEffect, useState } from "react";
 import { FaShoppingCart, FaSearch, FaUser, FaPaw } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { logOut } from "../sliceLogic/userAuth";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
   const nav = useNavigate();
-  const user = localStorage.getItem("name");
-  const id = localStorage.getItem("id");
-  
+  const user = Cookies.get("name");
+  const id = Cookies.get("id");
+
+  //-------------------------------------
+
+
   const [cartL, setCartL] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -25,29 +34,62 @@ const Navbar = () => {
   useEffect(() => {
     fetchCartL();
   }, [id]);
+  //-------------------------------------
 
+  //logout
   const handleLogOut = () => {
-    localStorage.clear();
-    fetchCartL();
-    setCartL([]);
-    setDropdownOpen(false); // Ensure the dropdown closes
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out of your account!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log me out!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Remove all cookies
+        const allCookies = Cookies.get(); // Get all cookies
+        for (const cookie in allCookies) {
+          Cookies.remove(cookie, { path: "/" }); // Remove each cookie
+        }
+        localStorage.clear();
+        fetchCartL(); 
+        setCartL([]); 
+        setDropdownOpen(false); 
+        dispatch(logOut());
+        toast.warn("Logged Out");
+        nav("/");
+      }
+    });
   };
 
+  //-------------------------------------
+
+  //log in nav
   const handleLogIn = () => {
-    nav("/login");
-    setDropdownOpen(false);
+    nav("/login");  // Redirect to the login page
+        setDropdownOpen(false);
   };
+  
+
+  //-------------------------------------
+
   const navigateHome = () => nav("/");
   const toggleDropdown = () => setDropdownOpen((prevState) => !prevState);
-
+  //-------------------------------------
 
   // search
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const products = useSelector((state) => state.pro.products);
   const [query, setQuery] = useState([]);
-
   useEffect(() => {
-    setQuery(products.filter((item) => item.heading.toLowerCase().includes(search.toLowerCase().trim())));
+    setQuery(
+      products.filter((item) =>
+        item.heading.toLowerCase().includes(search.toLowerCase().trim())
+      )
+    );
   }, [products, search]);
 
   const handleNavSearch = (id) => {
@@ -58,6 +100,10 @@ const Navbar = () => {
     }
   };
 
+  //-------------------------------------
+
+//close drop down when we click outside
+
   useEffect(() => {
     const closeDropdown = (e) => {
       if (!e.target.closest(".relative")) {
@@ -67,31 +113,43 @@ const Navbar = () => {
     document.addEventListener("click", closeDropdown);
     return () => document.removeEventListener("click", closeDropdown);
   }, []);
-  
 
+  //-------------------------------------
+
+  //pofile nav
   const handlePro = () => {
     nav("/profile");
     setDropdownOpen(false);
-  }
+  };
 
   return (
     <nav className="bg-white shadow-md py-4">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center cursor-pointer" onClick={navigateHome}>
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={navigateHome}
+        >
           <FaPaw className="text-3xl text-teal-500 mr-2" />
           <span className="text-2xl font-bold text-gray-800">Pets</span>
         </div>
 
         {/* Links */}
         <div className="flex items-center space-x-6">
-          <Link to="/" className="text-gray-600 hover:text-teal-500" aria-label="Home">
+          <Link
+            to="/"
+            className="text-gray-600 hover:text-teal-500"
+            aria-label="Home"
+          >
             Home
           </Link>
-          <Link to="/store" className="text-gray-600 hover:text-teal-500" aria-label="Featured">
+          <Link
+            to="/store"
+            className="text-gray-600 hover:text-teal-500"
+            aria-label="Featured"
+          >
             Featured
           </Link>
-        
 
           {/* Search Bar */}
           <div className="relative">
@@ -114,7 +172,9 @@ const Navbar = () => {
                     className="p-3 hover:bg-gray-100 cursor-pointer transition duration-200"
                     onClick={() => handleNavSearch(item.id)}
                   >
-                    <span className="text-sm font-medium text-gray-800">{item.heading}</span>
+                    <span className="text-sm font-medium text-gray-800">
+                      {item.heading}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -122,7 +182,11 @@ const Navbar = () => {
           </div>
 
           {/* Cart */}
-          <Link to="/cart" className="relative text-gray-600 hover:text-teal-500" aria-label="View Cart">
+          <Link
+            to="/cart"
+            className="relative text-gray-600 hover:text-teal-500"
+            aria-label="View Cart"
+          >
             <FaShoppingCart className="inline mr-1" />
             Cart
             {cartL.length > 0 && (
@@ -147,23 +211,22 @@ const Navbar = () => {
                 <ul>
                   {user ? (
                     <>
-                    <li
-                      onClick={handleLogOut}
-                      className="block px-4 py-2 text-gray-600 hover:bg-gray-100 cursor-pointer"
-                    >
-                      Logout
-                    </li>
-                    <li>
-      <Link
-        to="/profile"
-        className="block px-4 py-2 text-gray-600 hover:bg-gray-100"
-        onClick={ handlePro}
-      >
-        Profile
-      </Link>
-    </li>
-                    
-                   </>
+                      <li
+                        onClick={handleLogOut}
+                        className="block px-4 py-2 text-gray-600 hover:bg-gray-100 cursor-pointer"
+                      >
+                        Logout
+                      </li>
+                      <li>
+                        <Link
+                          to="/profile"
+                          className="block px-4 py-2 text-gray-600 hover:bg-gray-100"
+                          onClick={handlePro}
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                    </>
                   ) : (
                     <li
                       onClick={handleLogIn}
@@ -171,7 +234,6 @@ const Navbar = () => {
                     >
                       Login
                     </li>
-                    
                   )}
                 </ul>
               </div>
