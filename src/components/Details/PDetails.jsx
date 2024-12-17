@@ -17,55 +17,58 @@ const PDetails = () => {
   const { product } = useSelector((state) => state.pro);
 
   return (
-    <div className="min-h-screen bg-green-50 py-6 px-4 flex flex-col items-center">
+    <div className="min-h-screen bg-green-50 py-10 px-4 flex flex-col items-center">
       {/* Go Back Button - Positioned on the Left */}
       <div className="w-full max-w-4xl flex justify-start mb-6">
         <button
           onClick={() => navigate(-1)}
-          className="bg-green-100 text-green-700 px-4 py-2 rounded hover:bg-green-200 transition-all"
+          className="bg-green-100 text-green-700 px-6 py-3 rounded-lg hover:bg-green-200 transition-all"
         >
           ← Go Back
         </button>
       </div>
 
       {/* Main Product Container */}
-      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg flex flex-col md:flex-row overflow-hidden">
+      <div className="w-full max-w-4xl bg-white shadow-xl rounded-lg flex flex-col md:flex-row overflow-hidden border border-gray-300">
         {/* Product Image */}
-        <div className="w-full md:w-1/2 h-64 md:h-auto">
+        <div className="w-full md:w-1/2 h-72 md:h-auto p-4 flex justify-center items-center">
           <img
             src={product?.imageUrl}
             alt={product?.productName}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
           />
         </div>
 
         {/* Product Details */}
         <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
           <div>
-            <h2 className="text-2xl font-semibold text-green-700">{product?.productName}</h2>
-            <div className="flex items-center mt-2">
-              <p className="text-gray-400 line-through mr-3">₹{product?.productPrice}</p>
-              <p className="text-gray-800 font-bold text-lg">₹{product?.offerPrize}</p>
+            {/* Product Title */}
+            <h2 className="text-3xl font-semibold text-green-800 mb-3">{product?.productName}</h2>
+            
+            {/* Pricing */}
+            <div className="flex items-center mb-4">
+              <p className="text-gray-400 line-through mr-3 text-lg">₹{product?.productPrice}</p>
+              <p className="text-green-600 font-semibold text-xl">₹{product?.offerPrize}</p>
             </div>
 
             {/* Rating Section */}
-            <div className="mt-4">
-              <span className="text-yellow-500 text-lg">
+            <div className="mt-4 mb-4">
+              <span className="text-yellow-500 text-xl">
                 {'★'.repeat(Math.floor(product?.rating || 0))}
                 {'☆'.repeat(5 - Math.floor(product?.rating || 0))}
               </span>
-              <span className="ml-2 text-gray-500 text-sm">({product?.rating || 0}/5)</span>
+              <span className="ml-2 text-gray-600 text-sm">({product?.rating || 0}/5)</span>
             </div>
 
             {/* Product Description */}
-            <p className="text-gray-600 text-sm mt-4 leading-relaxed">
+            <p className="text-gray-700 text-md mt-4 leading-relaxed">
               {product?.productDescription || "No description available."}
             </p>
           </div>
 
           {/* Add to Cart Button */}
           <button
-            className="mt-6 bg-green-500 text-white px-6 py-2 rounded shadow-lg hover:bg-green-600 transition-all"
+            className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 transition-all"
           >
             Add to Cart
           </button>

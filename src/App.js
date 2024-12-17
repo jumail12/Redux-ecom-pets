@@ -16,9 +16,9 @@ import Best from './components/Best';
 import Cart from './pages/Cart';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchProducts } from './sliceLogic/ProductSlice';
+// import { fetchProducts } from './sliceLogic/ProductSlice';
 import { fetchCart } from './sliceLogic/cartSlice';
-import TopPro from './components/TopPro/TopPro';
+// import TopPro from './components/TopPro/TopPro';
 import Payment from './pages/Payment';
 import ThankYou from './pages/ThankYou';
 import Profile from './components/Profile';
@@ -26,6 +26,9 @@ import { ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import PDetails from './components/Details/PDetails';
 import WishList from './components/WishList ';
+import TopPro from './components/TopPro/TopPro';
+
+
 
 
 
@@ -67,7 +70,7 @@ function App() {
           <Route path='cat-food' element={<CatFood />} /> 
           <Route path='cat-treat' element={<CatTreat />} /> 
         </Route>
-        <Route path='/store' element={<TopPro/>}/>
+        <Route path='/go' element={<TopPro/>}/>
 
         <Route path='/wishlist' element={<WishList/>}/>
 

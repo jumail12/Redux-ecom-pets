@@ -1,41 +1,69 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { FeturedPro } from "../../sliceLogic/ProductSlice";
 
 const SliderCards = () => {
-  const products = useSelector((state) => state.pro.products);
-  const filtered = products.filter((item) => item.rating > 4.3);
+  const dispatch = useDispatch();
+  const [visibleCount, setVisibleCount] = useState(4); // Start with 4 products shown
 
-  const navigate = useNavigate();
-  const handleProductClick = (id) => {
-    navigate(`/prod/${id}`);
+  useEffect(() => {
+    dispatch(FeturedPro()); // Fetch the featured products on mount
+  }, [dispatch]);
+
+  const { featuredPro } = useSelector((state) => state.pro);
+
+  const showMoreProducts = () => {
+    setVisibleCount((prevCount) => prevCount + 4); // Show 4 more products on click
   };
 
   return (
-    <div className="w-full bg-white p-4">
-      <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
-        {filtered.map((bed) => (
-          <div
-            onClick={() => handleProductClick(bed.id)}
-            key={bed.id}
-            className="min-w-[240px] bg-gray-100 border p-4 border-gray-300 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
-          >
-            {/* Display the single image for each product */}
-            <img
-              src={bed.url}
-              alt={bed.heading}
-              className="w-full h-40 object-cover rounded-md mb-2"
-            />
+    <div className="w-full bg-white px-4 py-6">
+      {/* Header Section */}
+      <div className="py-4 flex items-center gap-4">
+        <div className="w-6 bg-black h-10 rounded"></div>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+          Featured Products
+        </h1>
+      </div>
 
-            <div className="p-2">
-              <h2 className="text-md font-semibold text-gray-800 mb-1">
-                {bed.heading}
+      {/* Horizontal Product Slider */}
+      <div className="flex space-x-4 overflow-x-auto scrollbar-hide py-4">
+        {featuredPro.map((product) => (
+          <div
+            key={product.productId}
+            className="min-w-[240px] bg-gray-100 border p-4 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-transform hover:scale-105"
+          >
+            <Link to={`/product/${product.productId}`}>
+              <img
+                src={product.imageUrl}
+                alt={product.productName}
+                className="w-full h-40 object-cover rounded-md mb-2"
+              />
+            </Link>
+            <div>
+              <h2 className="text-md font-semibold text-gray-800 truncate mb-1">
+                {product.productName}
               </h2>
-              <p className="text-lg font-bold text-gray-700">${bed.price}</p>
+              <p className="text-lg font-bold text-gray-600">
+                ${product.offerPrize}
+              </p>
             </div>
           </div>
         ))}
       </div>
+
+      {/* "Show More" Button */}
+      {visibleCount < featuredPro.length && (
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={showMoreProducts}
+            className="bg-blue-600 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-700 transition-all"
+          >
+            Show More
+          </button>
+        </div>
+      )}
     </div>
   );
 };

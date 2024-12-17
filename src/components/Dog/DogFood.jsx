@@ -4,6 +4,7 @@ import ProductItem from '../Product reusable comp/ProductItem';
 import DogFoodOffer from '../Carousel/DogFoodOffer';
 import { filteredProducts_ } from '../../sliceLogic/ProductSlice';
 
+
 const DogFood = () => {
   const dispatch=useDispatch();
       useEffect(() => {
@@ -29,7 +30,6 @@ const DogFood = () => {
             ) : (
                 <p className="text-center text-xl text-gray-500">No products found</p>
             )}
-
             <DogFoodOffer />
         </div>
   )

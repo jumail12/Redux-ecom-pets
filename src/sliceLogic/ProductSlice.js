@@ -16,6 +16,18 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+// FeturedPro
+export const FeturedPro = createAsyncThunk("products/FeturedPro", async () => {
+  try {
+    const res = await axiosInstance.get(`/Product/FeturedPro`);
+    return res.data.data;
+  } catch (err) {
+    throw new Error(
+      err.response?.data || "Please check your internet connection"
+    );
+  }
+});
+
 //filtered products
 export const filteredProducts_ = createAsyncThunk(
   "products/filteredProducts_",
@@ -39,23 +51,32 @@ export const fetchProductById = createAsyncThunk(
   async (id) => {
     try {
       const res = await axiosInstance.get(`/Product/GetById/${id}`);
-      console.log(res.data.data);
       return res.data.data;
     } catch (err) {
-        console.log("error in error");
       throw new Error(
-       
         err.response?.data || "Please check your internet connection"
       );
-     
-        
     }
   }
 );
 
+
+//search
+export const SerachPro = createAsyncThunk("products/SerachPro", async (qry) => {
+  try {
+    const res = await axiosInstance.get(`/Product/search-item?search=${qry}`);
+    return res.data.data;
+  } catch (err) {
+    throw new Error(
+      err.response?.data || "Please check your internet connection"
+    );
+  }
+});
+
 const intil = {
   status: "idle",
   products: [],
+  featuredPro: [],
   filteredProducts: [],
   search: [],
   product: {},
@@ -109,7 +130,25 @@ const productSlice = createSlice({
       .addCase(fetchProductById.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
-      });
+      })
+
+      //featured
+      .addCase(FeturedPro.fulfilled, (state, action) => {
+        state.featuredPro = action.payload;
+        state.status = "fulfiled";
+      })
+      .addCase(FeturedPro.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+
+      //search
+      .addCase(SerachPro.fulfilled,(state,action)=>{
+        state.search=action.payload;
+        state.status="fulfilled";
+      })
+      .addCase(SerachPro.rejected,(state,action)=>{
+        state.error=action.error.message;
+      })
   },
 });
 
