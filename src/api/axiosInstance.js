@@ -10,6 +10,9 @@ headers:{
 timeout: 10000,
 
 });
+
+
+
 axiosInstance.interceptors.request.use(
     config=>{
         const token = Cookies.get('token'); 

@@ -1,97 +1,118 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { removeFromCart,incrementQty,decrementQty } from '../sliceLogic/cartSlice';
-import {ToastContainer,toast} from "react-toastify"
-import 'react-toastify/dist/ReactToastify.css';
-
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux"; 
+import { useNavigate } from "react-router-dom"; 
+import {
+  removeFromCart,
+  fetchCart,
+  decrementQty,
+  incrementQty,
+} from "../sliceLogic/cartSlice"; 
+import { ToastContainer, toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 const Cart = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const cart = useSelector((state) => state.cartItems.cart);
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch,fetchCart()]);
 
-     const tget = cart.map((item)=>item.qty*item.price )
-    const total=tget.reduce((acc,cur)=>acc+=cur,0)
-    
-    return (
-        <div className="container mx-auto p-6">
-        <ToastContainer/>
-        <h1 className="text-3xl font-bold text-center mb-6">Your Cart</h1>
-    
-        {cart.length === 0 ? (
-            <div className="text-center">
-                <img 
-                    src="https://cdn.pixabay.com/photo/2015/11/06/11/50/shopping-cart-1026510_1280.jpg" 
-                    alt="Empty Cart"
-                    className="w-1/4 h-auto mx-auto mb-4 object-fill" 
+  const { cart, totalPrice } = useSelector((state) => state.cartItems);
+
+  const handleDelete = (id) => {
+    dispatch(removeFromCart(id));
+    dispatch(fetchCart());
+    toast.warn("Item removed!");
+  };
+
+  return (
+    <div className="container mx-auto p-8 max-w-7xl">
+      <ToastContainer />
+      <h1 className="text-4xl font-semibold text-center text-gray-900 mb-8">Your Cart</h1>
+
+      {cart === null || cart.length === 0 ? (
+        <div className="text-center">
+          <img
+            src="https://cdn.pixabay.com/photo/2015/11/06/11/50/shopping-cart-1026510_1280.jpg"
+            alt="Empty Cart"
+            className="w-1/3 h-auto mx-auto mb-6 object-cover"
+          />
+          <h2 className="text-2xl text-gray-600 font-medium">Your cart is empty!</h2>
+          <button
+            onClick={() => navigate("/store")}
+            className="mt-6 px-8 py-4 text-white bg-indigo-600 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out"
+          >
+            Start Shopping
+          </button>
+        </div>
+      ) : (
+        <>
+          {/* Cart Items */}
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {cart.map((item) => (
+              <div
+                key={item.productId}
+                className="flex flex-col bg-white p-6 shadow-xl rounded-xl space-y-4 transform transition duration-500 hover:scale-105"
+              >
+                <img
+                  src={item.productImage}
+                  alt={item.productName}
+                  className="w-24 h-24 object-cover mx-auto rounded-md"
                 />
-                <h2 className="text-2xl font-bold text-gray-500">Your cart is empty!</h2>
-                <button
-                    onClick={() => navigate('/store')}
-                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                    Shop Now
-                </button>
-            </div>
-        ) : (
-            <>
-                {/* Cart Items Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-                    {cart.map((item) => (
-                        <div key={item.id} className="bg-white shadow-md rounded-lg overflow-hidden p-2">
-                            <img
-                                src={item.url}
-                                alt={item.name}
-                                className="w-30 h-32 object-fill mb-2"
-                            />
-                            <div className="p-2">
-                                <h3 className="text-lg font-semibold">{item.name}</h3>
-                                <p className="text-gray-600">Price: ${item.price}</p>
-                                
-                                <div className="flex items-center mt-2">
-                                    <p className="text-gray-600 mr-4">Qty: {item.qty}</p>
-                                    <button 
-                                        onClick={async() => await dispatch(decrementQty(item.id))}
-                                        className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
-                                    >
-                                        -
-                                    </button>
-                                    <button 
-                                        onClick={async() => await dispatch(incrementQty(item.id))}
-                                        className="bg-green-500 text-white px-2 py-1 rounded-md ml-2 hover:bg-green-600"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-    
-                                <p className="text-gray-800 font-bold mt-2">Total: ${(item.price * item.qty).toFixed(2)}</p>
-    
-                                <button 
-                                    onClick={async() => await dispatch(removeFromCart(item.id))}
-                                    className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-    
-                {/* Proceed to Payment Button */}
-                <div className="text-center mt-6">
+                <div className="space-y-2">
+                  <h3 className="text-xl font-semibold text-gray-800">{item.productName}</h3>
+                  <p className="text-gray-600">Price: ₹{item.offerprice}</p>
+
+                  <div className="flex items-center space-x-4">
                     <button
-                        onClick={() => cart.length>0? navigate('/payment'):toast.info("Your cart is empty..!")} 
-                        className="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300"
+                      onClick={async () => await dispatch(decrementQty(item.productId))}
+                      className="px-4 py-2 border border-gray-300 rounded-full text-xl text-gray-600 bg-white hover:bg-gray-100 transform transition duration-300 ease-in-out"
                     >
-                        Proceed to Payment  :<span className="font-bold">${total}</span>
+                      -
                     </button>
+                    <span className="text-xl font-semibold text-gray-800">{item.quantity}</span>
+                    <button
+                      onClick={async () => await dispatch(incrementQty(item.productId))}
+                      className="px-4 py-2 border border-gray-300 rounded-full text-xl text-gray-600 bg-white hover:bg-gray-100 transform transition duration-300 ease-in-out"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <p className="text-lg font-bold text-gray-900 mt-3">
+                    Total: ₹{(item.price * item.quantity).toFixed(2)}
+                  </p>
                 </div>
-            </>
-        )}
+
+                {/* Remove Item Button */}
+                <button
+                  onClick={() => handleDelete(item.productId)}
+                  className="mt-3 w-full px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 shadow-md transform transition duration-300 ease-in-out"
+                >
+                  Remove Item
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Proceed to Payment Button */}
+          <div className="mt-10 text-center">
+            <button
+              onClick={() =>
+                cart.length > 0
+                  ? navigate("/payment")
+                  : toast.info("Your cart is empty!")
+              }
+              className="w-full px-8 py-3 border-2 border-teal-500 text-teal-500 font-semibold rounded-full hover:bg-teal-500 hover:text-white transform transition duration-300 ease-in-out"
+            >
+              Proceed to Payment - ₹{totalPrice}
+            </button>
+          </div>
+        </>
+      )}
     </div>
-    
-    );
+  );
 };
 
 export default Cart;

@@ -84,18 +84,16 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const Searchproducts = useSelector((state) => state.pro.search);
 
- const handleSearch=(e)=>{
-  const value = e.target.value.toLowerCase();
-  setSearch(value);
-  dispatch(SerachPro(value || ""));
- }
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    dispatch(SerachPro(value || ""));
+  };
 
- const handleSearchNav=(it)=>{
-  nav(`/product/${it}`);
-  setSearch("");
-}
-
-
+  const handleSearchNav = (it) => {
+    nav(`/product/${it}`);
+    setSearch("");
+  };
 
   //-------------------------------------
 
@@ -151,7 +149,6 @@ const Navbar = () => {
           >
             Featured
           </Link>
-       
 
           {/* Search Bar */}
           <div className="relative">
@@ -167,30 +164,28 @@ const Navbar = () => {
 
             {/* Mapped filtered items */}
             {Searchproducts.length > 0 && search.length > 0 && (
-  <div className="absolute top-12 mt-1 w-full max-h-60 bg-white shadow-lg rounded-lg overflow-y-auto border border-gray-200 z-50">
-    {Searchproducts.map((item) => (
-      <div
-        key={item.productId}
-        className="p-3 hover:bg-gray-100 cursor-pointer transition duration-200 flex items-center gap-3"
-        onClick={() => handleSearchNav(item.productId)}
-      >
-        {/* Product Image */}
-        <img
-          src={item.imageUrl}
-          alt={item.productName}
-          className="w-12 h-12 object-cover rounded-md border border-gray-300"
-        />
-        
-        {/* Product Name */}
-        <span className="text-sm font-medium text-gray-800">
-          {item.productName}
-        </span>
-      </div>
-    ))}
-  </div>
-)}
+              <div className="absolute top-12 mt-1 w-full max-h-60 bg-white shadow-lg rounded-lg overflow-y-auto border border-gray-200 z-50">
+                {Searchproducts.map((item) => (
+                  <div
+                    key={item.productId}
+                    className="p-3 hover:bg-gray-100 cursor-pointer transition duration-200 flex items-center gap-3"
+                    onClick={() => handleSearchNav(item.productId)}
+                  >
+                    {/* Product Image */}
+                    <img
+                      src={item.imageUrl}
+                      alt={item.productName}
+                      className="w-12 h-12 object-cover rounded-md border border-gray-300"
+                    />
 
-             
+                    {/* Product Name */}
+                    <span className="text-sm font-medium text-gray-800">
+                      {item.productName}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Cart */}
@@ -244,9 +239,8 @@ const Navbar = () => {
                           className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100"
                           onClick={handlePro}
                         >
-                         
                           {/* Heart Icon */}
-                          <span>Wishlist</span> 
+                          <span>Wishlist</span>
                           <FaHeart className="ml-2 mr-2 text-md" />
                         </Link>
                       </li>

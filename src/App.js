@@ -54,7 +54,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/store' element={<Best />} />
+        <Route path='/store' element={<TopPro />} />
         {/* <Route path='/adopt' element={<PetAdoption />} /> */}
 
         <Route path="/profile" element={<Profile />} />
