@@ -40,8 +40,12 @@ const PDetails = () => {
         return;
       }
       setIsCart((pr) => !pr);
-      dispatch(addedToCart(id));
-      toast.success("Item added to the cart!");
+      dispatch(addedToCart(id)) // Add to cart
+      .then(() => {
+        dispatch(fetchCart()); // Fetch updated cart
+        toast.success("Item added to the cart!");
+      })
+     
     } catch (err) {
       toast.warn(err.message);
     }

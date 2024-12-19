@@ -44,10 +44,11 @@ const ProductItem = ({ product }) => {
       className="relative ml-10 w-[220px] p-2 border border-gray-300 rounded-lg bg-white shadow-md text-center transition-transform transform hover:scale-105"
     >
       <Link to={`/product/${product.productId}`} className="block">
+        {/* Adjust Image Size */}
         <img
           src={product.imageUrl}
           alt={product.productName}
-          className="w-full h-40 object-cover rounded-md mb-4 transition-transform transform hover:scale-105"
+          className="w-full h-36 object-cover rounded-md mb-4 transition-transform transform hover:scale-105"
         />
       </Link>
 
@@ -63,8 +64,15 @@ const ProductItem = ({ product }) => {
         )}
       </button>
 
-      <div className="relative mt-2">
-        <h2 className="text-sm font-semibold mb-2">{product.productName}</h2>
+      <div className="relative mt-2 p-2">
+        {/* Product Name with Two Lines */}
+        <h2
+          className="text-sm font-semibold mb-2 line-clamp-2"
+          title={product.productName}
+        >
+          {product.productName}
+        </h2>
+
         <div className="flex justify-center items-center">
           <p className="text-gray-600 line-through mr-2">
             ₹{product.productPrice}

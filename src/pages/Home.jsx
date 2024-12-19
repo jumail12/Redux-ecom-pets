@@ -15,7 +15,7 @@ const Home = () => {
     <div>
       
       <Slider/>
-      <TopOffer />
+      {/* <TopOffer /> */}
       <Category/>
       <SliderCards/>
       <TopOffer10/>
