@@ -28,6 +28,9 @@ import PDetails from './components/Details/PDetails';
 import WishList from './components/WishList ';
 import TopPro from './components/TopPro/TopPro';
 
+import NewAddress from './components/address/NewAddress';
+import AddressManagement from './components/address/AddressMangement';
+
 
 
 
@@ -77,7 +80,15 @@ function App() {
         <Route path='/product/:idd' element={<PDetails/>}/>
         <Route path='/cart' element={<Cart />} />
         <Route path='/payment' element={<Payment/>}/>
+        <Route path='/payment/:apid' element={<Payment/>}/>
         <Route path='/thankyou' element={<ThankYou/>}/>
+
+      {/* //address */}
+      <Route path='/manageadd/:addid' element={<AddressManagement/>}/>
+      <Route path='/manageadd/' element={<AddressManagement/>}/>
+      <Route path='newadd' element={<NewAddress/>}/>
+
+
        </Routes>
 
       

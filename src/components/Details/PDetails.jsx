@@ -16,6 +16,7 @@ const PDetails = () => {
   const { product } = useSelector((state) => state.pro);
   const [isInCart, setIsCart] = useState(false);
   const { cart } = useSelector((st) => st.cartItems);
+ 
 
   useEffect(() => {
     dispatch(fetchProductById(idd));

@@ -11,6 +11,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import Payment from "./Payment";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -59,34 +60,41 @@ const Cart = () => {
       ) : (
         <div className="space-y-6">
           {/* Cart Items Section */}
+         
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
             {cart.map((item) => (
               <div
                 key={item.productId}
-                className="flex flex-col bg-white p-4 shadow-md rounded-lg space-y-4 h-full"
+                className="flex flex-col bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 p-6 shadow-lg rounded-xl space-y-4 h-full"
               >
+                 <Link to={`/product/${item.productId}`}>
                 <img
                   src={item.productImage}
                   alt={item.productName}
-                  className="w-28 h-28 object-cover mx-auto rounded-md"
+                  className="w-32 h-32 object-cover mx-auto rounded-lg border border-gray-300 shadow-sm"
                 />
+                </Link>
                 <div className="flex-grow text-center">
                   <h3
-                    className="text-sm font-medium text-gray-800 truncate"
+                    className="text-base font-semibold text-gray-900 truncate"
                     title={item.productName}
                   >
                     {item.productName}
                   </h3>
-                  <p className="text-xs text-gray-600 line-through">
-                    Price: ₹{item.orginalPrize}
+                  <p className="text-xs text-gray-700 line-through">
+                    Original Price: ₹{item.orginalPrize}
                   </p>
-                  <p className="text-xs text-gray-600">
-                    OfferPrice: ₹{item.price}
+                  <p className="text-sm text-gray-800 font-medium">
+                    Offer Price: ₹{item.price}
                   </p>
-                  <div className="flex items-center justify-center space-x-3 mt-2">
+                  <div className="flex items-center justify-center space-x-4 mt-3">
                     <button
-                      onClick={() => dispatch(decrementQty(item.productId)).then(()=>dispatch(fetchCart()))}
-                      className="px-2 py-1 border border-gray-300 rounded-full text-xs text-gray-600 bg-white hover:bg-gray-100 transform transition duration-300 ease-in-out"
+                      onClick={() =>
+                        dispatch(decrementQty(item.productId)).then(() =>
+                          dispatch(fetchCart())
+                        )
+                      }
+                      className="px-3 py-2 border border-gray-400 rounded-full text-xs text-gray-600 bg-white hover:bg-gray-200 transform transition-all duration-300"
                     >
                       -
                     </button>
@@ -94,19 +102,23 @@ const Cart = () => {
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => dispatch(incrementQty(item.productId)).then(()=>dispatch(fetchCart()))}
-                      className="px-2 py-1 border border-gray-300 rounded-full text-xs text-gray-600 bg-white hover:bg-gray-100 transform transition duration-300 ease-in-out"
+                      onClick={() =>
+                        dispatch(incrementQty(item.productId)).then(() =>
+                          dispatch(fetchCart())
+                        )
+                      }
+                      className="px-3 py-2 border border-gray-400 rounded-full text-xs text-gray-600 bg-white hover:bg-gray-200 transform transition-all duration-300"
                     >
                       +
                     </button>
                   </div>
-                  <p className="text-sm font-bold text-gray-900 mt-1">
+                  <p className="text-sm font-bold text-gray-900 mt-2">
                     Total: ₹{(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
                 <button
                   onClick={() => handleDelete(item.productId)}
-                  className="mt-auto flex items-center justify-center px-4 py-2 text-xs text-red-600 bg-red-100 rounded-md hover:bg-red-200 shadow-sm transform transition duration-300 ease-in-out"
+                  className="mt-auto flex items-center justify-center px-4 py-3 text-xs text-red-600 bg-red-100 rounded-lg hover:bg-red-200 shadow-md transform transition-all duration-300"
                 >
                   <MdDelete className="mr-2 text-lg" />
                   Remove Item
@@ -114,6 +126,7 @@ const Cart = () => {
               </div>
             ))}
           </div>
+         
 
           {/* Cart Summary Section */}
           <div className="bg-white p-6 shadow-lg rounded-lg">
@@ -176,7 +189,10 @@ const Cart = () => {
               </div>
             </div>
             <button
-              onClick={() => navigate("/payment")}
+              onClick={() =>{
+                navigate("/payment");
+                <Payment cItems={cart} />
+              }}
               className="mt-6 w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out"
             >
               Proceed to Checkout

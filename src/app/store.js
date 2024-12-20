@@ -4,6 +4,7 @@ import productSlice from "../sliceLogic/ProductSlice";
 import  cartSlice from "../sliceLogic/cartSlice";
 import orderSlice from "../sliceLogic/Payment";
 import wishlistSlice  from "../sliceLogic/WishListSlice"
+import addressSlice from "../sliceLogic/AddressSlice";
 
 
 
@@ -15,7 +16,8 @@ const store=configureStore({
         pro:productSlice,
         cartItems:cartSlice,
         ord:orderSlice,
-        wish:wishlistSlice
+        wish:wishlistSlice,
+        address:addressSlice
     }
 });
 

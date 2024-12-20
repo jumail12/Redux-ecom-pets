@@ -2,9 +2,9 @@ import React from "react";
 
 const Slider = () => {
   const imageUrls = [
-    "https://cdn.pixabay.com/photo/2018/10/01/09/21/pets-3715733_1280.jpg",
-    "https://cdn.pixabay.com/photo/2019/08/19/07/45/corgi-4415649_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2021/01/02/23/55/dog-5883275_1280.jpg",
+    "https://cdn.pixabay.com/photo/2020/03/31/19/20/dog-4988985_960_720.jpg",
+    "https://cdn.pixabay.com/photo/2018/10/01/09/21/pets-3715733_1280.jpg",   
+    "https://cdn.pixabay.com/photo/2015/11/17/13/13/bulldog-1047518_960_720.jpg",
   ];
 
   return (
