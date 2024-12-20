@@ -98,6 +98,7 @@ const initial = {
   msg: "",
   error: null,
   totalPrice: null,
+
 };
 
 // Cart slice
@@ -137,6 +138,7 @@ const cartSlice = createSlice({
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.cart = action.payload.c_items;
+      
         state.totalPrice=action.payload.totalCartPrice;
       })
       .addCase(fetchCart.rejected, (state, action) => {
