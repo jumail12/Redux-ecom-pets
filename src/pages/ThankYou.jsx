@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ThankYou = () => {
   const [showVideo, setShowVideo] = useState(false);
   const [showText, setShowText] = useState(false);
+  const nav = useNavigate();
 
   useEffect(() => {
     // Show video after 1 second
@@ -29,10 +31,12 @@ const ThankYou = () => {
             autoPlay
             muted
             loop
-           
             className="video-animation"
           >
-            <source src="https://cdnl.iconscout.com/lottie/premium/thumb/order-complete-animation-download-in-lottie-json-gif-static-svg-file-formats--successful-transaction-completed-processed-purchase-confirmed-digital-marketing-pack-e-commerce-shopping-animations-8433699.mp4" type="video/mp4" />
+            <source
+              src="https://cdnl.iconscout.com/lottie/premium/thumb/order-complete-animation-download-in-lottie-json-gif-static-svg-file-formats--successful-transaction-completed-processed-purchase-confirmed-digital-marketing-pack-e-commerce-shopping-animations-8433699.mp4"
+              type="video/mp4"
+            />
             Your browser does not support the video tag.
           </video>
         </div>
@@ -44,6 +48,13 @@ const ThankYou = () => {
           <h2 className="text-4xl font-bold text-indigo-600 mb-4">Thank You!</h2>
           <p className="text-lg text-gray-500">Your order has been successfully placed.</p>
           <p className="text-gray-500">We appreciate your purchase and will process it shortly.</p>
+          {/* Styled Button */}
+          <button
+            onClick={() => nav('/')}
+            className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition duration-300"
+          >
+            Back to Home
+          </button>
         </div>
       )}
     </div>

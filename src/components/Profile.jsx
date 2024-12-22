@@ -1,45 +1,28 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchOrder } from "../sliceLogic/Payment";
+import Cookies from "js-cookie";
+import { UserOrders } from "../sliceLogic/CheckoutSlice";
 
 const Profile = () => {
-  const [userData, setUserData] = useState(null);
   const [loadingProfile, setLoadingProfile] = useState(true); 
-
-  const userId = localStorage.getItem("id");
   const dispatch = useDispatch();
-
-  const userOrders = useSelector((state) => state.ord.order);
-  
+  const { orderDetails } = useSelector((state) => state.checkout);
   const [loadingOrders, setLoadingOrders] = useState(true);
 
-  // Fetch user profile
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5002/users/${userId}`);
-        setUserData(response.data);
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      } finally {
-        setLoadingProfile(false);
-      }
-    };
+  const email = Cookies.get("email");
+  const useid = Cookies.get("name");
 
-    if (userId) fetchUserProfile();
-  }, [userId]);
+  useEffect(() => {
+    if (email && useid) setLoadingProfile(false);
+  }, [email, useid]);
 
   // Fetch orders
   useEffect(() => {
-    const fetchUserOrders = async () => {
-      setLoadingOrders(true);
-      await dispatch(fetchOrder());
-      setLoadingOrders(false);
-    };
-
-    fetchUserOrders();
+    dispatch(UserOrders());
   }, [dispatch]);
+
+  console.log(orderDetails);
 
   return (
     <div className="container mx-auto p-6 space-y-8">
@@ -47,17 +30,14 @@ const Profile = () => {
       <div className="bg-white shadow-md rounded-lg p-6">
         {loadingProfile ? (
           <p>Loading profile...</p>
-        ) : userData ? (
+        ) : email && useid ? (
           <>
             <h1 className="text-2xl font-bold mb-4">Profile Information</h1>
             <p>
-              <strong>Name:</strong> {userData.lastName}
+              <strong>UserName:</strong> <span className="font-semibold text-orange-600">{useid}</span>
             </p>
             <p>
-              <strong>Email:</strong> {userData.email}
-            </p>
-            <p>
-              <strong>Phone:</strong> {userData.mob}
+              <strong>Email:</strong> <span className="font-semibold text-orange-600">{email}  </span>
             </p>
           </>
         ) : (
@@ -67,59 +47,60 @@ const Profile = () => {
 
       {/* Orders Section */}
       <div className="bg-white shadow-md rounded-lg p-6">
-  <h2 className="text-xl font-semibold mb-4">Your Orders</h2>
-
-  {loadingOrders ? (
-    <p>Loading orders...</p>
-  ) 
-  
-  : userOrders.length > 0 ? (
-
-    <ul className="space-y-4">
-      {userOrders.map((order, index) => (
-
-        <li key={index} className="border p-4 rounded">
-          <h3 className=" font-extrabold text-rose-300  bg-slate-500 mb-2">Order #{index + 1}</h3>
-          <p>
-            <strong>Address:</strong> {order.address}
-          </p>
-          <p>
-            <strong>Payment Method:</strong> {order.paymentMethod}
-          </p>
-          <p>
-            <strong className="font-bold">Total Price:</strong> ${order.totalPrice}
-          </p>
-
-          <h4 className="mt-2 font-bold ">Items:</h4>
-
-          <ul className="space-y-2">
-            {order.cart.map((item) => (
-              <li key={item.id} className="flex items-center space-x-4">
-                <img
-                  src={item.url}
-                  alt={item.heading}
-                  className="w-16 h-16 object-fill rounded"
-                />
-                <div>
-                  <h5 className="font-semibold">{item.heading}</h5>
+        <h2 className="text-2xl font-bold mb-4">Your Orders</h2>
+        {orderDetails && orderDetails.length > 0 ? (
+          <div className="space-y-6">
+            {orderDetails.map((order) => (
+              <div
+                key={order.orderId}
+                className="border rounded-lg p-4 bg-gray-50 shadow-sm"
+              >
+                <div className="mb-4">
                   <p>
-                    <strong>Price:</strong> ${item.price}
+                    <strong>Order ID:</strong>  <span className=" font-semibold text-sm">{order.orderString}</span>
                   </p>
                   <p>
-                    <strong>Quantity:</strong> {item.qty}
+                    <strong>Order Date:</strong>{" "}
+                   <span className=" font-semibold text-sm">  {new Date(order.orderDate).toLocaleString()}</span>
+                  </p>
+                  <p>
+                    <strong>Status:</strong> <span className="font-bold text-sky-500">{order.orderStatus}</span> 
+                  </p>
+                  <p>
+                    <strong>Transaction ID:</strong> <span className=" font-semibold text-sm">{order.transactionId}</span>
                   </p>
                 </div>
-              </li>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Items:</h3>
+                  <div className="space-y-4">
+                    {order.items.map((item) => (
+                      <div
+                        key={item.orderItemId}
+                        className="flex items-center bg-white p-4 rounded-md shadow-sm"
+                      >
+                        <img
+                          src={item.productImage}
+                          alt={item.productName}
+                          className="w-16 h-16 rounded-md mr-4 object-cover"
+                        />
+                        <div>
+                          <h4 className="font-medium">{item.productName}</h4>
+                          <p>
+                            <strong>Quantity:</strong> {item.quantity}
+                          </p>
+                        
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p>No orders found.</p>
-  )}
-</div>
-
+          </div>
+        ) : (
+          <p>No orders found.</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -71,7 +71,7 @@ const WishList = () => {
                 </div>
 
                 {/* Product Title */}
-                <h2 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
+                <h2 className="text-lg p-2 font-semibold text-gray-800 mb-2 line-clamp-2">
                   {item.productName}
                 </h2>
                 <p className="text-gray-500 text-sm mb-1">
