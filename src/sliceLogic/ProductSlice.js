@@ -60,7 +60,6 @@ export const fetchProductById = createAsyncThunk(
   }
 );
 
-
 //search
 export const SerachPro = createAsyncThunk("products/SerachPro", async (qry) => {
   try {
@@ -73,6 +72,63 @@ export const SerachPro = createAsyncThunk("products/SerachPro", async (qry) => {
   }
 });
 
+//add pro
+export const AdminAddProduct = createAsyncThunk("products/addpro", async (param) => {
+  try {
+    const res = await axiosInstance.post(`/Product/Add_Pro`, param);
+    return res.data.message;
+  } catch (err) {
+    throw new Error(
+      err.response?.data || "Please check your internet connection"
+    );
+  }
+});
+
+//update
+export const UpdatePro = createAsyncThunk(
+  "products/updateProduct",
+  async (id, param) => {
+    try {
+      const res = await axiosInstance.put(`/Product/Update_Pro/${id}`, param);
+      return res.data.message;
+    } catch (err) {
+      throw new Error(
+        err.response?.data || "Please check your internet connection"
+      );
+    }
+  }
+);
+
+//delete
+export const DeleteProduct = createAsyncThunk(
+  "products/deletePro",
+  async (id) => {
+    try {
+      const res = await axiosInstance.delete(`/Product/Delete/${id}`);
+      return res.data.message;
+    } catch (err) {
+      throw new Error(
+        err.response?.data || "Please check your internet connection"
+      );
+    }
+  }
+);
+
+//fetch categories
+export const FetchCategories = createAsyncThunk(
+  "products/FetchCategories",
+  async () => {
+    try {
+      const res = await axiosInstance.get(`/Category/getCategories`);
+      return res.data.data;
+    } catch (err) {
+      throw new Error(
+        err.response?.data || "Please check your internet connection"
+      );
+    }
+  }
+);
+
 const intil = {
   status: "idle",
   products: [],
@@ -81,6 +137,8 @@ const intil = {
   search: [],
   product: {},
   error: null,
+  res: null,
+  categories: [],
 };
 
 const productSlice = createSlice({
@@ -142,13 +200,50 @@ const productSlice = createSlice({
       })
 
       //search
-      .addCase(SerachPro.fulfilled,(state,action)=>{
-        state.search=action.payload;
-        state.status="fulfilled";
+      .addCase(SerachPro.fulfilled, (state, action) => {
+        state.search = action.payload;
+        state.status = "fulfilled";
       })
-      .addCase(SerachPro.rejected,(state,action)=>{
-        state.error=action.error.message;
+      .addCase(SerachPro.rejected, (state, action) => {
+        state.error = action.error.message;
       })
+
+      //add
+      .addCase(AdminAddProduct.fulfilled, (state, action) => {
+        state.res = action.payload;
+        state.status = "fulfilled";
+      })
+      .addCase(AdminAddProduct.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+
+      //update
+      .addCase(UpdatePro.fulfilled, (state, action) => {
+        state.res = action.payload;
+        state.status = "fulfilled";
+      })
+      .addCase(UpdatePro.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+
+      //delete
+      .addCase(DeleteProduct.fulfilled, (state, action) => {
+        state.res = action.payload;
+        state.status = "fulfilled";
+      })
+      .addCase(DeleteProduct.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+
+      //caytegries
+    
+      .addCase(FetchCategories.fulfilled, (state, action) => {
+        state.categories = action.payload;
+        state.status = "fulfilled";
+      })
+      .addCase(FetchCategories.rejected, (state, action) => {
+        state.error = action.error.message;
+      });
   },
 });
 

@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   // Log out handler
-  const handleLogOut = () => {
+   const handleLogOut = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You will be logged out of your account!",
@@ -54,8 +54,11 @@ const Navbar = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        Cookies.remove("token");
-        Cookies.remove("name");
+        // Cookies.remove("token");
+        // Cookies.remove("name");
+        Object.keys(Cookies.get()).forEach(function(cookieName) {
+          Cookies.remove(cookieName);
+      });
         localStorage.clear();
         dispatch(logOut());
         toast.warn("Logged Out");

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchOrder } from "../sliceLogic/Payment";
 import Cookies from "js-cookie";
 import { UserOrders } from "../sliceLogic/CheckoutSlice";
 
@@ -8,7 +7,7 @@ const Profile = () => {
   const [loadingProfile, setLoadingProfile] = useState(true); 
   const dispatch = useDispatch();
   const { orderDetails } = useSelector((state) => state.checkout);
-  const [loadingOrders, setLoadingOrders] = useState(true);
+
 
   const email = Cookies.get("email");
   const useid = Cookies.get("name");
@@ -22,7 +21,7 @@ const Profile = () => {
     dispatch(UserOrders());
   }, [dispatch]);
 
-  console.log(orderDetails);
+
 
   return (
     <div className="container mx-auto p-6 space-y-8">
@@ -55,7 +54,7 @@ const Profile = () => {
                 key={order.orderId}
                 className="border rounded-lg p-4 bg-gray-50 shadow-sm"
               >
-                <div className="mb-4">
+                {/* <div className="mb-4">
                   <p>
                     <strong>Order ID:</strong>  <span className=" font-semibold text-sm">{order.orderString}</span>
                   </p>
@@ -69,7 +68,7 @@ const Profile = () => {
                   <p>
                     <strong>Transaction ID:</strong> <span className=" font-semibold text-sm">{order.transactionId}</span>
                   </p>
-                </div>
+                </div> */}
                 <div>
                   <h3 className="text-xl font-bold mb-2">Items:</h3>
                   <div className="space-y-4">
@@ -88,6 +87,9 @@ const Profile = () => {
                           <p>
                             <strong>Quantity:</strong> {item.quantity}
                           </p>
+                          <p>
+                    <strong>Status:</strong> <span className="font-bold text-sky-500">{order.orderStatus}</span>
+                  </p>
                         
                         </div>
                       </div>

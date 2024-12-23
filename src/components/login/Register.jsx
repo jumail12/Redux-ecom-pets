@@ -30,14 +30,16 @@ const Register = () => {
           UserEmail: values.email,
           Password: values.password,
         })
-      ).unwrap();
-
-      toast.success("User registered successfully!", {
-        onClose: () => {
-          nav("/login");
-          resetForm();
-        },
+      ).then(()=>{
+        toast.success("User registered successfully!", {
+          onClose: () => {
+            nav("/login");
+            resetForm();
+          },
+        });
       });
+
+    
     } catch (err) {
       toast.warn(err.message || "This email id is already taken.");
     }
