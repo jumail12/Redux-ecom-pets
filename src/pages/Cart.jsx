@@ -60,19 +60,18 @@ const Cart = () => {
       ) : (
         <div className="space-y-6">
           {/* Cart Items Section */}
-         
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
             {cart.map((item) => (
               <div
                 key={item.productId}
-                className="flex flex-col bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 p-6 shadow-lg rounded-xl space-y-4 h-full"
+                className="flex flex-col bg-white p-6 rounded-3xl shadow-2xl space-y-4 h-full border border-gray-200"
               >
-                 <Link to={`/product/${item.productId}`}>
-                <img
-                  src={item.productImage}
-                  alt={item.productName}
-                  className="w-32 h-32 object-cover mx-auto rounded-lg border border-gray-300 shadow-sm"
-                />
+                <Link to={`/product/${item.productId}`}>
+                  <img
+                    src={item.productImage}
+                    alt={item.productName}
+                    className="w-32 h-32 object-cover mx-auto rounded-xl border-4 border-indigo-500 shadow-md transform transition-all duration-300 hover:scale-105"
+                  />
                 </Link>
                 <div className="flex-grow text-center">
                   <h3
@@ -81,10 +80,10 @@ const Cart = () => {
                   >
                     {item.productName}
                   </h3>
-                  <p className="text-xs text-gray-700 line-through">
+                  <p className="text-xs text-gray-500 line-through">
                     Original Price: ₹{item.orginalPrize}
                   </p>
-                  <p className="text-sm text-gray-800 font-medium">
+                  <p className="text-sm text-gray-900 font-semibold">
                     Offer Price: ₹{item.price}
                   </p>
                   <div className="flex items-center justify-center space-x-4 mt-3">
@@ -94,11 +93,11 @@ const Cart = () => {
                           dispatch(fetchCart())
                         )
                       }
-                      className="px-3 py-2 border border-gray-400 rounded-full text-xs text-gray-600 bg-white hover:bg-gray-200 transform transition-all duration-300"
+                      className="px-3 py-2 border border-indigo-300 rounded-full text-lg text-indigo-600 bg-white hover:bg-indigo-100 transition-all duration-300"
                     >
                       -
                     </button>
-                    <span className="text-sm font-semibold text-gray-800">
+                    <span className="text-sm font-semibold text-gray-900">
                       {item.quantity}
                     </span>
                     <button
@@ -107,7 +106,7 @@ const Cart = () => {
                           dispatch(fetchCart())
                         )
                       }
-                      className="px-3 py-2 border border-gray-400 rounded-full text-xs text-gray-600 bg-white hover:bg-gray-200 transform transition-all duration-300"
+                      className="px-3 py-2 border border-indigo-300 rounded-full text-lg text-indigo-600 bg-white hover:bg-indigo-100 transition-all duration-300"
                     >
                       +
                     </button>
@@ -118,7 +117,7 @@ const Cart = () => {
                 </div>
                 <button
                   onClick={() => handleDelete(item.productId)}
-                  className="mt-auto flex items-center justify-center px-4 py-3 text-xs text-red-600 bg-red-100 rounded-lg hover:bg-red-200 shadow-md transform transition-all duration-300"
+                  className="mt-auto flex items-center justify-center px-4 py-2 text-xs text-white bg-red-600 rounded-lg hover:bg-red-700 shadow-md transition-all duration-300"
                 >
                   <MdDelete className="mr-2 text-lg" />
                   Remove Item
@@ -126,7 +125,6 @@ const Cart = () => {
               </div>
             ))}
           </div>
-         
 
           {/* Cart Summary Section */}
           <div className="bg-white p-6 shadow-lg rounded-lg">
@@ -189,9 +187,9 @@ const Cart = () => {
               </div>
             </div>
             <button
-              onClick={() =>{
+              onClick={() => {
                 navigate("/payment");
-                <Payment cItems={cart} />
+                <Payment cItems={cart} />;
               }}
               className="mt-6 w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-full shadow-md hover:bg-indigo-700 transform transition duration-300 ease-in-out"
             >

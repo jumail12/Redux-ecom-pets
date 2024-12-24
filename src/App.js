@@ -43,6 +43,7 @@ import Product_detailsAdmin from "./admin/comps/ProductDeatails/Product_detailsA
 import AddNewProduct from "./admin/adminPages/Add_Product";
 import DashBoard from "./admin/adminPages/DashBoard";
 import Edit_Product from "./admin/adminPages/Edit_Product";
+import HotProducts from "./components/HotProducts";
 
 function App() {
   const dispatch = useDispatch();
@@ -118,6 +119,8 @@ function App() {
          <Route path="/admin/products/:aId" element={< Product_detailsAdmin/>} />
          <Route  path="/admin/add-product" element={<AddNewProduct/>}/>
          <Route path="/admin/product/edit/:edId" element={<Edit_Product/>} />
+
+         <Route  path="/hot" element={<HotProducts/>}/>
        
       
 

@@ -25,6 +25,15 @@ const TopPro = () => {
         <h1 className="text-2xl md:text-3xl font-bold">featuredProducts</h1>
       </div>
 
+      <div className="w-full bg-gradient-to-r from-blue-600 to-green-500 text-white p-6 rounded-lg mb-6 text-center shadow-lg">
+                <h2 className="text-2xl font-semibold">Featured Products⭐</h2>
+                <p className="mt-2 text-lg">
+                    Explore our handpicked collection of premium items. 
+                    Designed for comfort and style.
+                </p>
+                
+            </div>
+
       {featuredPro.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-6">
           {featuredPro.map((pro) => (

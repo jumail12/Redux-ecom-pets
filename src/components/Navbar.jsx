@@ -54,8 +54,7 @@ const Navbar = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Cookies.remove("token");
-        // Cookies.remove("name");
+  
         Object.keys(Cookies.get()).forEach(function(cookieName) {
           Cookies.remove(cookieName);
       });
@@ -101,6 +100,9 @@ const Navbar = () => {
           </Link>
           <Link to="/store" className="text-gray-600 hover:text-teal-500">
             Featured
+          </Link>
+          <Link to="/hot" className="text-gray-600 hover:text-teal-500">
+            Hot Deals
           </Link>
 
           {/* Search Bar */}
@@ -175,6 +177,7 @@ const Navbar = () => {
                         <Link
                           to="/profile"
                           className="block px-4 py-2 text-gray-600 hover:bg-gray-100"
+                          onClick={()=>setDropdownOpen(false)}
                         >
                           Profile
                         </Link>
@@ -183,6 +186,7 @@ const Navbar = () => {
                         <Link
                           to="/wishlist"
                           className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100"
+                          onClick={()=>setDropdownOpen(false)}
                         >
                           <FaHeart className="mr-2" />
                           Wishlist

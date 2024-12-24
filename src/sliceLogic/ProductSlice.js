@@ -73,32 +73,15 @@ export const SerachPro = createAsyncThunk("products/SerachPro", async (qry) => {
 });
 
 //add pro
-export const AdminAddProduct = createAsyncThunk("products/addpro", 
+export const AdminAddProduct = createAsyncThunk(
+  "products/addpro",
   async (param) => {
-  try {
-    const res = await axiosInstance.post(`/Product/Add_Pro`, param);
-    return res.data.message;
-  } catch (err) {    
-    console.log(err.response);
-    
-    throw new Error(
-      err.response?.data || "Please check your internet connection"
-    );
-  }
-});
-
-//update
-export const UpdatePro = createAsyncThunk(
-  "products/updateProduct",
-  async ({ id, data }) => {  
     try {
-      const res = await axiosInstance.put(`/Product/Update_Pro/${id}`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data", 
-        },
-      });
-      return res.data.message; 
+      const res = await axiosInstance.post(`/Product/Add_Pro`, param);
+      return res.data.message;
     } catch (err) {
+      console.log(err.response);
+
       throw new Error(
         err.response?.data || "Please check your internet connection"
       );
@@ -106,6 +89,24 @@ export const UpdatePro = createAsyncThunk(
   }
 );
 
+//update
+export const UpdatePro = createAsyncThunk(
+  "products/updateProduct",
+  async ({ id, data }) => {
+    try {
+      const res = await axiosInstance.put(`/Product/Update_Pro/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res.data.message;
+    } catch (err) {
+      throw new Error(
+        err.response?.data || "Please check your internet connection"
+      );
+    }
+  }
+);
 
 //delete
 export const DeleteProduct = createAsyncThunk(
@@ -137,6 +138,21 @@ export const FetchCategories = createAsyncThunk(
   }
 );
 
+//hotdeals
+export const FetchHotProducts = createAsyncThunk(
+  "/products/hotdeals",
+  async () => {
+    try {
+      const res = await axiosInstance.get(`/Product/HotDeals`);
+      return res.data.data;
+    } catch (err) {
+      throw new Error(
+        err.response?.data || "Please check your internet connection"
+      );
+    }
+  }
+);
+
 const intil = {
   status: "idle",
   products: [],
@@ -147,6 +163,7 @@ const intil = {
   error: null,
   res: null,
   categories: [],
+  hotDeals: [],
 };
 
 const productSlice = createSlice({
@@ -244,12 +261,22 @@ const productSlice = createSlice({
       })
 
       //caytegries
-    
+
       .addCase(FetchCategories.fulfilled, (state, action) => {
         state.categories = action.payload;
         state.status = "fulfilled";
       })
       .addCase(FetchCategories.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+
+      //hot
+
+      .addCase(FetchHotProducts.fulfilled, (state, action) => {
+        state.hotDeals = action.payload;
+        state.status = "fulfilled";
+      })
+      .addCase(FetchHotProducts.rejected, (state, action) => {
         state.error = action.error.message;
       });
   },

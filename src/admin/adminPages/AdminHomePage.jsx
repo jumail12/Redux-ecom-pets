@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 import Swal from "sweetalert2";
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../sliceLogic/userAuth';
-import { toast } from 'react-toastify';
 
 const AdminHomePage = () => {
   const role = Cookies.get('role');
@@ -28,7 +27,6 @@ const AdminHomePage = () => {
         });
        
         dispatch(logOut());
-      
         navigate("/login");
       }
     });
@@ -43,10 +41,10 @@ const AdminHomePage = () => {
   }
 
   return (
-    <div className="flex h-full   bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 text-white">
-        <div className="py-7 ml-2">
+    <div className="flex h-full bg-gray-100">
+      {/* Sidebar (Fixed) */}
+      <aside className="w-80 p-5 bg-gray-800 text-white fixed h-full"> {/* Fixed position and full height */}
+        <div className="py-7  ml-2">
           <h1 className="text-2xl font-bold">Admin Panel</h1>
         </div>
         <nav className="mt-4">
@@ -84,7 +82,7 @@ const AdminHomePage = () => {
                   }`
                 }
               >
-                 Product Section
+                Product Section
               </NavLink>
             </li>
             <li>
@@ -124,8 +122,7 @@ const AdminHomePage = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow p-6">
-        {/* Default Text */}
+      <main className="flex-grow p-6 ml-80"> {/* Added ml-80 to push content to the right */}
         <div className="bg-white shadow rounded p-6">
           <h2 className="text-2xl font-bold mb-2">Welcome to the Admin Panel</h2>
           <p className="text-gray-700">
@@ -133,9 +130,9 @@ const AdminHomePage = () => {
           </p>
         </div>
 
-      <div >
-      <Outlet/>
-      </div>
+        <div>
+          <Outlet />
+        </div>
       </main>
     </div>
   );
