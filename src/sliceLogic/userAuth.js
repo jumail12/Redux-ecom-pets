@@ -17,8 +17,10 @@ export const addUsers = createAsyncThunk("user/addUsers", async (user) => {
     const resp = await axiosInstance.post(`/Auth/Register`, user);
     return resp.data; // Return the response message
   } catch (error) {
+   console.log( error);
+   
     throw new Error(
-      error.response?.data?.message || "Please check your internet connection"
+      error.data || "Please check your internet connection"
     );
   }
 });

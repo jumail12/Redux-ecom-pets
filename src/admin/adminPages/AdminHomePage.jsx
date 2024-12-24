@@ -26,9 +26,9 @@ const AdminHomePage = () => {
         Object.keys(Cookies.get()).forEach(function (cookieName) {
           Cookies.remove(cookieName);
         });
-        localStorage.clear();
+       
         dispatch(logOut());
-        toast.warn("Logged Out");
+      
         navigate("/login");
       }
     });
@@ -43,10 +43,10 @@ const AdminHomePage = () => {
   }
 
   return (
-    <div className="flex h-full bg-gray-100">
+    <div className="flex h-full   bg-gray-100">
       {/* Sidebar */}
       <aside className="w-64 bg-gray-800 text-white">
-        <div className="py-6 px-4">
+        <div className="py-7 ml-2">
           <h1 className="text-2xl font-bold">Admin Panel</h1>
         </div>
         <nav className="mt-4">
@@ -133,7 +133,9 @@ const AdminHomePage = () => {
           </p>
         </div>
 
+      <div >
       <Outlet/>
+      </div>
       </main>
     </div>
   );

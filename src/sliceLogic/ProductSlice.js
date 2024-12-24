@@ -73,11 +73,14 @@ export const SerachPro = createAsyncThunk("products/SerachPro", async (qry) => {
 });
 
 //add pro
-export const AdminAddProduct = createAsyncThunk("products/addpro", async (param) => {
+export const AdminAddProduct = createAsyncThunk("products/addpro", 
+  async (param) => {
   try {
     const res = await axiosInstance.post(`/Product/Add_Pro`, param);
     return res.data.message;
-  } catch (err) {
+  } catch (err) {    
+    console.log(err.response);
+    
     throw new Error(
       err.response?.data || "Please check your internet connection"
     );
@@ -87,10 +90,14 @@ export const AdminAddProduct = createAsyncThunk("products/addpro", async (param)
 //update
 export const UpdatePro = createAsyncThunk(
   "products/updateProduct",
-  async (id, param) => {
+  async ({ id, data }) => {  
     try {
-      const res = await axiosInstance.put(`/Product/Update_Pro/${id}`, param);
-      return res.data.message;
+      const res = await axiosInstance.put(`/Product/Update_Pro/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data", 
+        },
+      });
+      return res.data.message; 
     } catch (err) {
       throw new Error(
         err.response?.data || "Please check your internet connection"
@@ -98,6 +105,7 @@ export const UpdatePro = createAsyncThunk(
     }
   }
 );
+
 
 //delete
 export const DeleteProduct = createAsyncThunk(

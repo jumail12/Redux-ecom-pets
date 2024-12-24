@@ -42,6 +42,7 @@ import Cat_treat from "./admin/comps/Product with categories/Cat_treat";
 import Product_detailsAdmin from "./admin/comps/ProductDeatails/Product_detailsAdmin";
 import AddNewProduct from "./admin/adminPages/Add_Product";
 import DashBoard from "./admin/adminPages/DashBoard";
+import Edit_Product from "./admin/adminPages/Edit_Product";
 
 function App() {
   const dispatch = useDispatch();
@@ -116,6 +117,7 @@ function App() {
 
          <Route path="/admin/products/:aId" element={< Product_detailsAdmin/>} />
          <Route  path="/admin/add-product" element={<AddNewProduct/>}/>
+         <Route path="/admin/product/edit/:edId" element={<Edit_Product/>} />
        
       
 

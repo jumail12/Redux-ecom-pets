@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { FetchCategories, AdminAddProduct } from "../../sliceLogic/ProductSlice"; // Ensure correct import path
 import * as Yup from "yup";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 const AddNewProductForm = () => {
   const dispatch = useDispatch();
@@ -70,6 +72,13 @@ const AddNewProductForm = () => {
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg w-full max-w-4xl mx-auto">
+
+       <Link
+              to={"/admin"}
+              className="text-blue-500 hover:underline mb-6 inline-block"
+            >
+              {"< Back to Admin Panel"}
+            </Link>
       <h2 className="text-2xl font-semibold mb-6 text-gray-900">Add New Product</h2>
 
       <form onSubmit={formik.handleSubmit} className="space-y-4">

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchProductById } from "../../../sliceLogic/ProductSlice";
-
+import { fetchProductById,FetchCategories } from "../../../sliceLogic/ProductSlice";
+import * as Yup from "yup";
 const Product_detailsAdmin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -12,6 +12,10 @@ const Product_detailsAdmin = () => {
   useEffect(() => {
     dispatch(fetchProductById(aId));
   }, [dispatch, aId]);
+
+  const handleEditProduct = () => {
+    navigate(`/admin/product/edit/${aId}`);
+  };
 
   return (
     <div className="min-h-screen bg-green-50 py-10 px-4 flex flex-col items-center">
@@ -68,6 +72,16 @@ const Product_detailsAdmin = () => {
             <p className="text-gray-700 text-md mt-4 leading-relaxed">
               {product?.productDescription || "No description available."}
             </p>
+          </div>
+
+          {/* Update Button */}
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={handleEditProduct}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all"
+            >
+              Update Product
+            </button>
           </div>
         </div>
       </div>
