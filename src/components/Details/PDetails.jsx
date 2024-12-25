@@ -6,6 +6,7 @@ import { fetchProductById } from "../../sliceLogic/ProductSlice";
 import { addedToCart, fetchCart } from "../../sliceLogic/cartSlice";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import Payment from "../../pages/Payment";
 
 const PDetails = () => {
   const navigate = useNavigate();
@@ -16,7 +17,6 @@ const PDetails = () => {
   const { product } = useSelector((state) => state.pro);
   const [isInCart, setIsCart] = useState(false);
   const { cart } = useSelector((st) => st.cartItems);
- 
 
   useEffect(() => {
     dispatch(fetchProductById(idd));
@@ -42,11 +42,10 @@ const PDetails = () => {
       }
       setIsCart((pr) => !pr);
       dispatch(addedToCart(id)) // Add to cart
-      .then(() => {
-        dispatch(fetchCart()); // Fetch updated cart
-        toast.success("Item added to the cart!");
-      })
-     
+        .then(() => {
+          dispatch(fetchCart()); // Fetch updated cart
+          toast.success("Item added to the cart!");
+        });
     } catch (err) {
       toast.warn(err.message);
     }
@@ -55,6 +54,23 @@ const PDetails = () => {
   // Navigate to cart page
   const goToCart = () => {
     navigate(`/cart`);
+  };
+
+  // Handle Buy Now functionality
+  const handleBuyNow = (id) => {
+    try {
+      if (!token) {
+        toast.warn("Please login to proceed with the purchase!");
+        return;
+      }else{
+        navigate(`/payment`, { state: { productId: id } });
+      }
+   
+         
+     
+    } catch (err) {
+      toast.error("Unable to process your request. Try again later.");
+    }
   };
 
   return (
@@ -114,21 +130,32 @@ const PDetails = () => {
             </p>
           </div>
 
-          {/* Add to Cart Button */}
+          {/* Add to Cart and Buy Now Buttons */}
           {!isInCart ? (
-            <button
-              className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 transition-all"
-              onClick={() => handleCart(product.productId)}
-            >
-              Add to Cart
-            </button>
+            <>
+              <button
+                className="mt-4 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 transition-all"
+                onClick={() => handleCart(product.productId)}
+              >
+                Add to Cart
+              </button>
+              <button
+                className="mt-4 w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-all"
+                onClick={() => handleBuyNow(product.productId)}
+              >
+                Buy Now
+              </button>
+            </>
           ) : (
-            <button
-              onClick={goToCart}
-              className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 transition-all"
-            >
-              Go to Cart
-            </button>
+            <>
+              <button
+                onClick={goToCart}
+                className="mt-4 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 transition-all"
+              >
+                Go to Cart
+              </button>
+          
+            </>
           )}
         </div>
       </div>

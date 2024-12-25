@@ -57,7 +57,7 @@ function App() {
   const sholudHidden =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    location.pathname.startsWith("/admin");
+    location.pathname.startsWith("/admin" && "/thankyou");
 
   return (
     <div>
@@ -92,6 +92,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment/:apid" element={<Payment />} />
+        <Route path="/payment/:buy" element={<Payment />} />
         <Route path="/thankyou" element={<ThankYou />} />
 
         {/* //address */}

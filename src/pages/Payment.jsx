@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { fetchAddress } from "../sliceLogic/AddressSlice";
 import { toast } from "react-toastify";
 import {
   CreateOrder,
+  IndividualProBuy,
   RazorOrderCreation,
   RazorPaymentVerify,
+  UserOrders,
 } from "../sliceLogic/CheckoutSlice";
 import Cookies from "js-cookie";
 import { fetchCart } from "../sliceLogic/cartSlice";
+import { fetchProductById } from "../sliceLogic/ProductSlice";
 
 //--------------------------------------------------------
 //razorpay script
@@ -30,19 +33,31 @@ const Payment = () => {
   const cart = useSelector((state) => state.cartItems.cart);
   const { address } = useSelector((state) => state.address);
 
-  const { orderId, paymentStatus } = useSelector((state) => state.checkout);
-  const [raz, setRaz] = useState(null);
+  const { orderId } = useSelector((state) => state.checkout);
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const { apid } = useParams();
+
   const dispatch = useDispatch();
   const email = Cookies.get("email");
   //--------------------------------------------------------
+  //buy now fun
+  const location = useLocation();
+  const { productId } = location.state || {};
+
+  const { product } = useSelector((state) => state.pro);
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(fetchProductById(productId));
+    }
+  }, [dispatch]);
+
+  //--------------------------------------------------------
+
   useEffect(() => {
     dispatch(fetchAddress());
-    
-    
   }, [dispatch]);
 
   useEffect(() => {
@@ -67,6 +82,8 @@ const Payment = () => {
     0
   );
 
+  //individual pro buy price
+  const proTotalPrice = product.offerPrize;
 
   //submit checkout
   const handleProceedToCheckout = async () => {
@@ -83,8 +100,11 @@ const Payment = () => {
     }
 
     try {
-      await dispatch(RazorOrderCreation( Math.trunc(totalPrice)));
-      console.log(orderId);
+      if (productId) {
+        await dispatch(RazorOrderCreation(Math.trunc(proTotalPrice)));
+      } else {
+        await dispatch(RazorOrderCreation(Math.trunc(totalPrice)));
+      }
 
       if (orderId) {
         const razorpayOptions = {
@@ -120,40 +140,56 @@ const Payment = () => {
       }
     } catch (err) {
       // console.log(err.message);
-      
+
       toast.warn(err.message);
     }
   };
-
 
   //verify razorpayment
   const verifyPayment = async (data) => {
     try {
       await dispatch(RazorPaymentVerify(data));
       await placeOrder(data);
-       
-      
     } catch (err) {
       toast.error("Payment verification failed.");
       toast.error(err.message);
     }
   };
 
-
   //orderplacing
   const placeOrder = async (paymentData) => {
     try {
-      const orderData = {
-        AddId: selectedAddress.addressId,
-        Total: totalPrice,
-        OrderString: orderId,
-        TransactionId: paymentData.razorpay_payment_id,
-      };
-      await dispatch(CreateOrder(orderData)).then(() => {
-        toast.success("order placed");
-        dispatch(fetchCart());
-        navigate("/thankyou");
-      });
+      if (productId) {
+
+        const orderData = {
+          AddId: selectedAddress.addressId,
+          Total: proTotalPrice,
+          OrderString: orderId,
+          TransactionId: paymentData.razorpay_payment_id,
+        };
+
+      
+        await dispatch(
+          IndividualProBuy({ proid: productId, param: orderData })
+        ).then(() => {
+        
+          dispatch(UserOrders());
+          toast.success("Order placed successfully");
+          navigate("/thankyou");
+        });
+      } else {
+        const orderData = {
+          AddId: selectedAddress.addressId,
+          Total: totalPrice,
+          OrderString: orderId,
+          TransactionId: paymentData.razorpay_payment_id,
+        };
+        await dispatch(CreateOrder(orderData)).then(() => {
+          toast.success("order placed");
+          dispatch(fetchCart());
+          navigate("/thankyou");
+        });
+      }
     } catch (err) {
       toast.error(err.message);
     }
@@ -208,12 +244,35 @@ const Payment = () => {
         )}
       </div>
 
-      {/* Cart Items Section */}
       <div className="bg-white p-6 shadow-lg rounded-lg mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Items</h2>
-        {cart.length > 0 ? (
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Order Items
+        </h2>
+
+        {/* If productId exists, show details of the single product */}
+        {productId ? (
+          <div className="flex items-center space-x-4">
+            <img
+              src={product.imageUrl}
+              alt={product.productName}
+              className="w-16 h-16 object-cover rounded-lg"
+            />
+            <div className="flex-1">
+              <h3 className="text-sm font-medium text-gray-900">
+                {product.productName}
+              </h3>
+              <p className="text-sm text-gray-600">
+                Price: ₹{product.offerPrize}
+              </p>
+            </div>
+            <span className="text-sm font-medium text-gray-900">
+              ₹{product.offerPrize}
+            </span>
+          </div>
+        ) : cart.length > 0 ? (
+          // If cart is not empty, map and show all cart items
           <div className="space-y-4">
-            {cart.map((item, index) => (
+            {cart.map((item) => (
               <div
                 key={item.productId}
                 className="flex items-center space-x-4 border-b pb-4 mb-4"
@@ -250,17 +309,25 @@ const Payment = () => {
         <div className="space-y-4">
           <div className="flex justify-between text-sm text-gray-600">
             <span>Total Items:</span>
-            <span>({cart.length})</span>
+            <span>
+              (
+              {productId
+                ? 1
+                : cart.reduce((acc, cur) => (acc += cur.quantity), 0)}
+              )
+            </span>
           </div>
 
           <div className="flex justify-between text-sm text-gray-600">
             <span>Price</span>
             <span>
               ₹
-              {cart.reduce(
-                (acc, item) => acc + item.orginalPrize * item.quantity,
-                0
-              )}
+              {productId
+                ? product.productPrice
+                : cart.reduce(
+                    (acc, item) => acc + item.orginalPrize * item.quantity,
+                    0
+                  )}
             </span>
           </div>
 
@@ -268,17 +335,25 @@ const Payment = () => {
             <span>Discount</span>
             <span className="text-green-600">
               - ₹
-              {cart.reduce(
-                (acc, item) =>
-                  acc + (item.orginalPrize - item.price) * item.quantity,
-                0
-              )}
+              {productId
+                ? (product.productPrice - product.offerPrize).toFixed(2)
+                : cart.reduce(
+                    (acc, item) =>
+                      acc + (item.orginalPrize - item.price) * item.quantity,
+                    0
+                  )}
             </span>
           </div>
           <div className="flex justify-between text-sm text-gray-600">
             <span>Discount Price</span>
             <span className="font-bold">
-              ₹{cart.reduce((acc, item) => acc + item.price * item.quantity, 0)}
+              ₹
+              {productId
+                ? product.offerPrize
+                : cart.reduce(
+                    (acc, item) => acc + item.price * item.quantity,
+                    0
+                  )}
             </span>
           </div>
 
@@ -289,7 +364,7 @@ const Payment = () => {
           <hr className="my-2" />
           <div className="flex justify-between text-base font-bold text-gray-900">
             <span>Total Amount</span>
-            <span>₹{totalPrice}</span>
+            <span>₹{productId ? proTotalPrice : totalPrice}</span>
           </div>
         </div>
         <button

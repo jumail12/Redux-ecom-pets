@@ -72,6 +72,24 @@ export const UserOrders=createAsyncThunk("checkout/UserOrders",
 );
 
 
+//individual pro buy
+export const IndividualProBuy = createAsyncThunk(
+  "checkout/IndividualProBuy",
+  async ({ proid, param }, { rejectWithValue }) => {
+    try {
+      // Making the request to the backend with product id and order data
+      const res = await axiosInstance.post(`/Order/individual-pro-buy/${proid}`, param);
+      return res.data.message; // Return the success message from backend
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data.message || "Please check your internet connection"
+      );
+    }
+  }
+);
+
+
+
 
 
 const intial = {
@@ -124,6 +142,17 @@ const CheckoutSlice = createSlice({
         state.status="rejected";
         state.error=action.error.message;
       })
+
+      //individu
+      .addCase(IndividualProBuy.fulfilled,(state,action)=>{
+        state.status="fulfilled";
+        state.paymentStatus=action.payload;
+      })
+      .addCase(IndividualProBuy.rejected,(state,action)=>{
+        state.status="rejected";
+        state.error=action.error.message;
+      })
+
   },
 });
 
