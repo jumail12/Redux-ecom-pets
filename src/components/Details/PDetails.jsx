@@ -6,7 +6,7 @@ import { fetchProductById } from "../../sliceLogic/ProductSlice";
 import { addedToCart, fetchCart } from "../../sliceLogic/cartSlice";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import Payment from "../../pages/Payment";
+
 
 const PDetails = () => {
   const navigate = useNavigate();
@@ -43,8 +43,8 @@ const PDetails = () => {
       setIsCart((pr) => !pr);
       dispatch(addedToCart(id)) // Add to cart
         .then(() => {
-          dispatch(fetchCart()); // Fetch updated cart
           toast.success("Item added to the cart!");
+          dispatch(fetchCart()) // Fetch updated cart
         });
     } catch (err) {
       toast.warn(err.message);
@@ -62,59 +62,56 @@ const PDetails = () => {
       if (!token) {
         toast.warn("Please login to proceed with the purchase!");
         return;
-      }else{
+      } else {
         navigate(`/payment`, { state: { productId: id } });
       }
-   
-         
-     
     } catch (err) {
       toast.error("Unable to process your request. Try again later.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-green-50 py-10 px-4 flex flex-col items-center">
+    <div className="min-h-screen bg-gray-100 py-12 px-6 flex flex-col items-center">
       {/* Go Back Button */}
-      <div className="w-full max-w-4xl flex justify-start mb-6">
+      <div className="w-full max-w-6xl flex justify-start mb-8">
         <button
           onClick={() => navigate(-1)}
-          className="bg-green-100 text-green-700 px-6 py-3 rounded-lg hover:bg-green-200 transition-all"
+          className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none transition-all duration-200"
         >
           ← Go Back
         </button>
       </div>
 
       {/* Product Details */}
-      <div className="w-full max-w-4xl bg-white shadow-xl rounded-lg flex flex-col md:flex-row overflow-hidden border border-gray-300">
+      <div className="w-full max-w-6xl bg-white rounded-xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-300">
         {/* Product Image */}
-        <div className="w-full md:w-1/2 h-72 md:h-auto p-4 flex justify-center items-center">
+        <div className="w-full md:w-1/2 p-6 flex justify-center items-center bg-gray-50">
           <img
             src={product?.imageUrl}
             alt={product?.productName}
-            className="w-full h-full object-cover rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+            className="max-w-full max-h-96 object-contain rounded-lg hover:scale-105 transform transition-transform duration-300"
           />
         </div>
 
         {/* Product Info */}
-        <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
+        <div className="w-full md:w-1/2 p-8 flex flex-col justify-between">
           <div>
-            <h2 className="text-3xl font-semibold text-green-800 mb-3">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
               {product?.productName}
             </h2>
 
             {/* Pricing */}
-            <div className="flex items-center mb-4">
-              <p className="text-gray-400 line-through mr-3 text-lg">
+            <div className="flex items-center mb-6">
+              <p className="text-gray-400 line-through mr-4 text-lg">
                 ₹{product?.productPrice}
               </p>
-              <p className="text-green-600 font-semibold text-xl">
+              <p className="text-green-600 font-bold text-2xl">
                 ₹{product?.offerPrize}
               </p>
             </div>
 
             {/* Rating Section */}
-            <div className="mt-4 mb-4">
+            <div className="flex items-center mb-6">
               <span className="text-yellow-500 text-xl">
                 {"★".repeat(Math.floor(product?.rating || 0))}
                 {"☆".repeat(5 - Math.floor(product?.rating || 0))}
@@ -125,38 +122,45 @@ const PDetails = () => {
             </div>
 
             {/* Product Description */}
-            <p className="text-gray-700 text-md mt-4 leading-relaxed">
+            <p className="text-gray-700 text-md mb-6 leading-relaxed">
               {product?.productDescription || "No description available."}
             </p>
           </div>
 
           {/* Add to Cart and Buy Now Buttons */}
-          {!isInCart ? (
-            <>
-              <button
-                className="mt-4 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 transition-all"
-                onClick={() => handleCart(product.productId)}
-              >
-                Add to Cart
-              </button>
-              <button
-                className="mt-4 w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-all"
-                onClick={() => handleBuyNow(product.productId)}
-              >
-                Buy Now
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={goToCart}
-                className="mt-4 w-full bg-green-600 text-white py-3 rounded-lg shadow-lg hover:bg-green-700 transition-all"
-              >
-                Go to Cart
-              </button>
-          
-            </>
-          )}
+          <div className="space-y-4">
+            {!isInCart ? (
+              <>
+                <button
+                  className="w-full bg-green-500 text-white py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none transition-all duration-200"
+                  onClick={() => handleCart(product.productId)}
+                >
+                  Add to Cart
+                </button>
+                <button
+                  className="w-full bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none transition-all duration-200"
+                  onClick={() => handleBuyNow(product.productId)}
+                >
+                  Buy Now
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={goToCart}
+                  className="w-full bg-green-500 text-white py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none transition-all duration-200"
+                >
+                  Go to Cart
+                </button>
+                <button
+                  className="w-full bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none transition-all duration-200"
+                  onClick={() => handleBuyNow(product.productId)}
+                >
+                  Buy Now
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

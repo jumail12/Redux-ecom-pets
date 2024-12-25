@@ -134,7 +134,7 @@ const Cart = () => {
             <div className="space-y-4">
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Total Items:</span>
-                <span> ({cart.length})</span>
+                <span> ({cart.reduce((acc, cur) => (acc += cur.quantity), 0)})</span>
               </div>
 
               <div className="flex justify-between text-sm text-gray-600">

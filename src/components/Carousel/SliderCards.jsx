@@ -5,18 +5,12 @@ import { FeturedPro } from "../../sliceLogic/ProductSlice";
 
 const SliderCards = () => {
   const dispatch = useDispatch();
-  const [visibleCount, setVisibleCount] = useState(4); // Start with 4 products shown
 
   useEffect(() => {
     dispatch(FeturedPro()); // Fetch the featured products on mount
   }, [dispatch]);
 
   const { featuredPro } = useSelector((state) => state.pro);
-
-  const showMoreProducts = () => {
-    setVisibleCount((prevCount) => prevCount + 4); // Show 4 more products on click
-  };
-
   return (
     <div className="w-full bg-white px-4 py-6">
       {/* Header Section */}
@@ -28,7 +22,7 @@ const SliderCards = () => {
       </div>
 
       {/* Horizontal Product Slider */}
-      <div className="flex space-x-4 overflow-x-auto scrollbar-hide py-4">
+      <div className="flex space-x-4 overflow-x-auto py-4">
         {featuredPro.map((product) => (
           <div
             key={product.productId}
@@ -53,17 +47,7 @@ const SliderCards = () => {
         ))}
       </div>
 
-      {/* "Show More" Button */}
-      {visibleCount < featuredPro.length && (
-        <div className="flex justify-center mt-6">
-          <button
-            onClick={showMoreProducts}
-            className="bg-blue-600 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-700 transition-all"
-          >
-            Show More
-          </button>
-        </div>
-      )}
+      
     </div>
   );
 };

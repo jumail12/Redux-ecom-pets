@@ -57,7 +57,7 @@ function App() {
   const sholudHidden =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    location.pathname.startsWith("/admin" && "/thankyou");
+    location.pathname.startsWith("/admin","/thankyou");
 
   return (
     <div>
