@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProductById, UpdatePro, FetchCategories } from '../../sliceLogic/ProductSlice';
-import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import * as Yup from "yup";
 
 const Edit_Product = () => {
     const { edId } = useParams();

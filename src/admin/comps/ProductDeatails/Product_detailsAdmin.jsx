@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchProductById,FetchCategories } from "../../../sliceLogic/ProductSlice";
-import * as Yup from "yup";
+import { fetchProductById } from "../../../sliceLogic/ProductSlice";
 const Product_detailsAdmin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

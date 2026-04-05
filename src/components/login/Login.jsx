@@ -2,7 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validationSchemaLogin } from "./loginValSchema";
 import { loginUser } from "../../sliceLogic/userAuth";
@@ -29,7 +29,7 @@ const Login = () => {
       Cookies.set("email", res.userEmail, { path: "/", secure: true, sameSite: "Strict" });
 
       resetForm();
-      if ((res.role == "Admin")) {
+      if ((res.role === "Admin")) {
         navigate("/admin", { replace: true });
       }else{
         navigate("/", { replace: true });

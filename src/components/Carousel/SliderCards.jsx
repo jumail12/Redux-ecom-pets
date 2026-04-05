@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FeturedPro } from "../../sliceLogic/ProductSlice";

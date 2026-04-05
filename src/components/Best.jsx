@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { fetchProducts } from '../sliceLogic/ProductSlice';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 const Best = () => {

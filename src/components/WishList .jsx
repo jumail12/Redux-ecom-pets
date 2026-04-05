@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RemoveFromWishlist, fetchwishlist } from "../sliceLogic/WishListSlice";
 import { useNavigate } from "react-router-dom";

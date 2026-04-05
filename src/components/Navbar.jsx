@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FaShoppingCart, FaSearch, FaUser, FaPaw, FaHeart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { logOut } from "../sliceLogic/userAuth";
-import { fetchCart, addedToCart } from "../sliceLogic/cartSlice";
+import { fetchCart } from "../sliceLogic/cartSlice";
 import { SerachPro } from "../sliceLogic/ProductSlice";
 
 const Navbar = () => {

@@ -10,7 +10,6 @@ import DogBed from "./components/Dog/DogBed";
 import CatLayout from "./pages/CatLayout";
 import CatFood from "./components/Cat/CatFood";
 import CatTreat from "./components/Cat/CatTreat";
-import Best from "./components/Best";
 
 import Cart from "./pages/Cart";
 import { useDispatch } from "react-redux";
