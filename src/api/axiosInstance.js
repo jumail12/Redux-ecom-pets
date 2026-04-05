@@ -3,10 +3,9 @@ import Cookies from 'js-cookie';
 
 export const axiosInstance =axios.create({
     
-baseURL:"https://localhost:7170/api",
-
+baseURL:"https://ecompets-backend-1.onrender.com/api",
+// baseURL:"https://localhost:7170/api",
 timeout: 10000,
-
 });
 
 

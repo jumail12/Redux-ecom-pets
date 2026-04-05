@@ -160,7 +160,6 @@ const Payment = () => {
   const placeOrder = async (paymentData) => {
     try {
       if (productId) {
-
         const orderData = {
           AddId: selectedAddress.addressId,
           Total: proTotalPrice,
@@ -168,11 +167,9 @@ const Payment = () => {
           TransactionId: paymentData.razorpay_payment_id,
         };
 
-      
         await dispatch(
           IndividualProBuy({ proid: productId, param: orderData })
         ).then(() => {
-        
           dispatch(UserOrders());
           toast.success("Order placed successfully");
           navigate("/thankyou");
@@ -207,7 +204,7 @@ const Payment = () => {
             className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700"
             onClick={() => navigate(`/manageadd/${selectedAddress?.addressId}`)}
           >
-            Exchange Address
+            Change Address
           </button>
         </div>
         {selectedAddress ? (

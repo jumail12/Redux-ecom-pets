@@ -28,16 +28,13 @@ const Login = () => {
       Cookies.set("name", res.userName, { path: "/", secure: true, sameSite: "Strict" });
       Cookies.set("email", res.userEmail, { path: "/", secure: true, sameSite: "Strict" });
 
-      toast.success("logged in successfully",{
-        onClose:()=>{
-          resetForm();
-          if ((res.role == "Admin")) {
-            navigate("/admin", { replace: true });
-          }else{
-            navigate("/", { replace: true });
-          }
-        }
-      });
+      resetForm();
+      if ((res.role == "Admin")) {
+        navigate("/admin", { replace: true });
+      }else{
+        navigate("/", { replace: true });
+      }
+      toast.success("logged in successfully");
      
     
       

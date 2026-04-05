@@ -29,17 +29,12 @@ const Register = () => {
           UserName: values.userName,
           UserEmail: values.email,
           Password: values.password,
-        })
-      ).then(()=>{
-        toast.success("User registered successfully!", {
-          onClose: () => {
-            nav("/login");
-            resetForm();
-          },
-        });
-      });
+        }),
+      );
 
-    
+      toast.success("User registered successfully!");
+      nav("/login");
+      resetForm();
     } catch (err) {
       toast.warn(err.message || "This email id is already taken.");
     }
@@ -81,7 +76,9 @@ const Register = () => {
                     name="userName"
                     type="text"
                     className={`w-full border px-2 py-1 rounded-md ${
-                      errors.userName && touched.userName ? "border-red-500" : ""
+                      errors.userName && touched.userName
+                        ? "border-red-500"
+                        : ""
                     }`}
                   />
                   <ErrorMessage
@@ -125,7 +122,9 @@ const Register = () => {
                     name="password"
                     type="password"
                     className={`w-full border px-2 py-1 rounded-md ${
-                      errors.password && touched.password ? "border-red-500" : ""
+                      errors.password && touched.password
+                        ? "border-red-500"
+                        : ""
                     }`}
                   />
                   <ErrorMessage
